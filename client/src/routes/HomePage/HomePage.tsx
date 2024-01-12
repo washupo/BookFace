@@ -1,4 +1,5 @@
 import { Typography } from "../../components/Typography";
+import { Icon } from "../../components/Icon";
 
 export default function HomePage() {
   return (
@@ -11,6 +12,8 @@ export default function HomePage() {
       >
         HomePage
       </Typography>
+      <Icon name="home" size="large" fill="black" />
+      <Icon name="home" size="small" fill="black" />
     </>
   );
 }
