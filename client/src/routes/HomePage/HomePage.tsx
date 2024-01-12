@@ -1,7 +1,16 @@
+import { Typography } from "../../components/Typography";
+
 export default function HomePage() {
-    return (
-      <h1 className="text-3xl font-bold underline">
-        Home page
-      </h1>
-    )
-  }
+  return (
+    <>
+      <Typography
+        component="h1"
+        fontSize="20"
+        textColor="brown"
+        hoverTextColor="beige"
+      >
+        HomePage
+      </Typography>
+    </>
+  );
+}
