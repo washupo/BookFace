@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "FKGroteskBold";
+  src: url("./assets/fonts/fkgrotesk-bold-webfont.woff2") format("woff2"),
+    url("./assets/fonts/fkgrotesk-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FKGrotesk";
+  src: url("./assets/fonts/fkgrotesk-medium-webfont.woff2") format("woff2"),
+    url("./assets/fonts/fkgrotesk-medium-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
