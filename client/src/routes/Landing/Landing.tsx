@@ -1,12 +1,12 @@
 import logo from "../../assets/images/logo.svg"
-import { LayoutNoNav } from "../../components/layout/LayoutNoNav"
+import { LayoutDark } from "../../components/layout/LayoutDark"
 
 export default function Landing() {
   return (
     <>
-      <LayoutNoNav>
+      <LayoutDark>
         <img src={logo} alt="Logo Funny Fur" />
-      </LayoutNoNav>
+      </LayoutDark>
     </>
   )
 }
