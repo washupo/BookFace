@@ -1,7 +1,12 @@
+import logo from "../../assets/images/logo.svg"
+import { LayoutNoNav } from "../../components/layout/LayoutNoNav"
+
 export default function Landing() {
-    return (
-      <h1 className="text-3xl font-bold underline">
-        Landing
-      </h1>
-    )
-  }
+  return (
+    <>
+      <LayoutNoNav>
+        <img src={logo} alt="Logo Funny Fur" />
+      </LayoutNoNav>
+    </>
+  )
+}
