@@ -16,6 +16,10 @@ export default {
         15: "15px",
         20: "20px",
       },
+      padding: {
+        20: "20px",
+        30: "30px",
+      },
       gap: {
         15: "15px",
         20: "20px",

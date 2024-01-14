@@ -1,10 +1,12 @@
 import { Typography } from "../../components/Typography";
-import { LayoutNav } from "../../components/layout/LayoutNav";
+import { Icon } from "../../components/Icon";
+import { Logo } from "../../components/logo";
+import { Layout } from "../../components/Layout";
 
 export default function HomePage() {
   return (
-    <>
-    <LayoutNav>
+    <Layout>
+      <Logo fill="brown" />
       <Typography
         component="h1"
         fontSize="20"
@@ -13,7 +15,9 @@ export default function HomePage() {
       >
         HomePage
       </Typography>
-      </LayoutNav>
-    </>
+      <Icon name="home" size="large" fill="brown" />
+      <Icon name="home" size="small" fill="beige" />
+
+    </Layout> 
   );
 }
