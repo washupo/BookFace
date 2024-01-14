@@ -3,7 +3,7 @@ interface TypographyProps {
   fontFamily?: "FKGrotesk" | "FKGroteskBold";
   fontSize: "20" | "15" | "13";
   textColor: "brown" | "beige" | "white";
-  hoverTextColor: "brown" | "beige" | "white";
+  hoverTextColor?: "brown" | "beige" | "white";
   underline?: boolean;
   uppercase?: boolean;
   children: React.ReactNode;
