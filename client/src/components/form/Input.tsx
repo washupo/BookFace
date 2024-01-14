@@ -1,5 +1,5 @@
 import { ChangeEvent, useState, useEffect } from 'react';
-import { Typography } from '../Typography';
+import { Typography } from '../../common/Typography';
 // import Icon from '@/components/common/Icon';
 
 interface InputProps {

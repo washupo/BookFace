@@ -1,4 +1,4 @@
-import { Typography } from "../../components/Typography";
+import { Typography } from "../../common/Typography";
 import { Icon } from "../../components/Icon";
 import { Logo } from "../../components/logo";
 import { Layout } from "../../components/layout/Layout";
