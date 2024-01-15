@@ -1,13 +1,16 @@
-
 interface LayoutProps {
+  background: "brown" | "white";
   children: React.ReactNode;
   className?: string;
 }
 
-export const Layout = ({ children, className }: LayoutProps) => {
+export const Layout = ({ background, children, className }: LayoutProps) => {
+  const backgroundClass =
+    background === "brown" ? "bg-brownPrimary" : "bg-whitePrimary";
+
   return (
-      <div className={`bg-whitePrimary h-[200vh] py-20 px-30 flex flex-col items-center justify-start gap-y-30 ${className}`}>
-          {children}
+    <div className={`w-full h-full py-30 px-20 ${backgroundClass} ${className}`}>
+      {children}
     </div>
   );
 };
