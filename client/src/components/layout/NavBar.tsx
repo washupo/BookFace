@@ -1,7 +1,6 @@
-import home from '../../assets/images/icons/homeIcons.svg';
-import search from '../../assets/images/icons/searchIcons.svg';
-import post from '../../assets/images/icons/postIcons.svg';
-import like from '../../assets/images/icons/liked.svg';
+import { Icon } from '../Icon';
+import { Link } from 'react-router-dom';
+
 import profilPicture from '../../assets/images/profilPictureTest.png';
 
 type NavBarProps = {
@@ -10,15 +9,30 @@ type NavBarProps = {
 };
 
 export const NavBar = ({ className }: NavBarProps) => {
+
     return (
         <>
             <div className={`flex flex-col w-full items-start gap-30 p-30 bg-brownPrimary border-t-2 border-whitePrimary z-50 fixed h-auto bottom-0 ${className}`}>
                 <div className="flex items-center justify-between w-full">
-                    <img className=" w-8 h-8" alt="Funnyfur logo" src={home} />
-                    <img className=" w-8 h-8" alt="Glass" src={search} />
-                    <img className=" w-8 h-8" alt="Add picture" src={post} />
-                    <img className=" w-8 h-8" alt="Like" src={like} />
+                    <Link to="/homepage">
+                    <Icon name='home' size='small' fill='white'/>
+                    </Link>
+
+                    <Link to="/">
+                    <Icon name='search' size='small' fill='white'/>
+                    </Link>
+
+                    <Link to="/">
+                    <Icon name='post' size='small' fill='white'/>
+                    </Link>
+
+                    <Link to="/">
+                    <Icon name='like' size='small' fill='white'/>
+                    </Link>
+                    <Link to="/profile">
                     <img className=" w-8 h-8 rounded-full" alt="Profile picture" src={profilPicture} />
+                    </Link>
+                    
                 </div>
             </div>
         </>
