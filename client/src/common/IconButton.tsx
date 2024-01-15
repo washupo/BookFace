@@ -1,6 +1,6 @@
 import { Icon, IconProps } from "../components/Icon";
 
-interface ButtonProps {
+interface IconButtonProps {
   onClick: () => void;
   iconName: string;
   iconSize: IconProps['size'];
@@ -8,7 +8,7 @@ interface ButtonProps {
   className?: string;
 }
 
-export const ButtonWithIcon = ({ onClick, iconName, iconSize, iconFill, className }: ButtonProps) => {
+export const IconButton = ({ onClick, iconName, iconSize, iconFill, className }: IconButtonProps) => {
   return (
     <button onClick={onClick} className={className}>
       <Icon name={iconName} size={iconSize} fill={iconFill} />
