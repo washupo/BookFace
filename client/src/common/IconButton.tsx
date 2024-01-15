@@ -2,16 +2,16 @@ import { Icon, IconProps } from "../components/Icon";
 
 interface IconButtonProps {
   onClick: () => void;
-  iconName: string;
-  iconSize: IconProps['size'];
-  iconFill: IconProps['fill'];
+  name: string;
+  size: IconProps['size'];
+  fill: IconProps['fill'];
   className?: string;
 }
 
-export const IconButton = ({ onClick, iconName, iconSize, iconFill, className }: IconButtonProps) => {
+export const IconButton = ({ onClick, name, size, fill, className }: IconButtonProps) => {
   return (
     <button onClick={onClick} className={className}>
-      <Icon name={iconName} size={iconSize} fill={iconFill} />
+      <Icon name={name} size={size} fill={fill} />
     </button>
   );
 };
