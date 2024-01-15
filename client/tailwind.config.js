@@ -17,6 +17,7 @@ export default {
         20: "20px",
       },
       padding: {
+        15: "15px",
         20: "20px",
         30: "30px",
       },
