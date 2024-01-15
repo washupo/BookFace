@@ -62,8 +62,8 @@ export const Input = ({
             text-whitePrimary bg-transparent outline-none placeholder:text-whitePrimary placeholder:font-fkGrotesk font-fkGroteskBold py-15 border-b-4 border-white
             ${
               error
-                ? "border-red/50 hover:border-red/60 focus:border-red/60"
-                : "border-white/5 hover:border-white/10 focus:border-white/10"
+                ? "border-red/50"
+                : "border-white/5"
             }
           `}
         />
