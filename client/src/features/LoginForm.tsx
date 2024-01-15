@@ -1,8 +1,11 @@
 import { Input } from "../components/form/Input"
+import { Form } from "../components/form/Form"
 
 export const LoginForm = (): JSX.Element => {
     return (
-        <div className="grid w-full gap-25">
+        <Form 
+        onSubmit={() => {}}
+        >
             <Input
                 label="Nom d'utilisateur"
                 placeholder="Nom d'utilisateur"
@@ -17,6 +20,7 @@ export const LoginForm = (): JSX.Element => {
                 name="username"
                 value=""
                 onChange={() => { }} />
-        </div>
+        </Form>
+
     )
 }
