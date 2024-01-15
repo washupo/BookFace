@@ -23,7 +23,7 @@ export const Button = ({
         type={type}
         className={`${className} ${backgroundClass} bg-whitePrimary py-15 w-44 rounded-5 hover:bg-beigePrimary transition duration-300 ease-in-out`}
       >
-        <Typography component="p" fontSize="15" textColor="brown">
+        <Typography component="p" fontSize="15" textColor="brown" fontFamily="FKGroteskBold">
           {name}
         </Typography>
       </button>

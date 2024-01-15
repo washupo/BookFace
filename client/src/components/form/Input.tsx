@@ -38,8 +38,8 @@ export const Input = ({
   }, [error]);
 
   return (
-    <div className={`${className} flex justify-center w-full`}>
-      <label className="flex flex-col w-full">
+    <div className={`${className}`}>
+      <label className="w-full flex flex-col">
         <Typography
           component="span"
           fontSize="13"
@@ -59,12 +59,8 @@ export const Input = ({
           autoComplete={autoComplete}
           onChange={onChange}
           className={`
-            text-whitePrimary bg-transparent outline-none placeholder:text-whitePrimary placeholder:font-fkGrotesk font-fkGroteskBold py-15 border-b-4 border-white
-            ${
-              error
-                ? "border-red/50"
-                : "border-white/5"
-            }
+            text-whitePrimary bg-transparent outline-none placeholder:text-whitePrimary placeholder:font-fkGrotesk font-fkGroteskBold py-[11px] border-b-2 border-whitePrimary
+            ${error ? "border-red/50" : "border-white/5"}
           `}
         />
       </label>
