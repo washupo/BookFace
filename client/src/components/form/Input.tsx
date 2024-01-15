@@ -39,13 +39,13 @@ export const Input = ({
 
   return (
     <div className={`${className} flex justify-center w-full`}>
-      <label className="flex flex-col gap-15 w-full">
+      <label className="flex flex-col w-full border-b-4 pb-15">
         <Typography
           component="span"
           fontSize="13"
           textColor="beige"
           fontFamily="FKGroteskBold"
-          className=""
+          className="pb-15"
         >
           {label}
         </Typography>
@@ -67,7 +67,6 @@ export const Input = ({
             }
           `}
         />
-        <hr className=" border-2 " />
       </label>
       <div
         className={`${
