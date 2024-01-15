@@ -17,6 +17,8 @@ export const CommentModal = ({ isOpen, setIsOpen, className }: CommentModalProps
             background='brown'
             className={`${className}`}
             name="Commentaires"
+            textColor="white"
+            fill="white"
         >
                     <p>Ceci est un exemple de contenu de modal.</p>
 

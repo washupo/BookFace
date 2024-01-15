@@ -17,6 +17,8 @@ export const SearchModal = ({ isOpen, setIsOpen, className }: SearchModalProps) 
             background='brown'
             className={`${className}`}
             name="Modal Title"
+            textColor="white"
+            fill="white"
         >
                     <p>Ceci est un exemple de contenu de modal.</p>
 

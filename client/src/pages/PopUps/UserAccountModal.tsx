@@ -1,24 +1,24 @@
 
 import { Modal } from "../../common/Modal";
 
-interface NotifModalProps {
+interface UserModalProps {
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     className?: string;
 
 }
 
-export const NotifModal = ({ isOpen, setIsOpen, className }: NotifModalProps) => {
+export const UserModal = ({ isOpen, setIsOpen, className }: UserModalProps) => {
     
     return (
         <Modal
             isOpen={isOpen}
             setIsOpen={setIsOpen} 
-            background='brown'
+            background='white'
             className={`${className}`}
-            name="Notifications"
-            textColor="white"
-            fill="white"
+            name="Modal Title"
+            textColor="brown"
+            fill="brown"
         >
                     <p>Ceci est un exemple de contenu de modal.</p>
 
