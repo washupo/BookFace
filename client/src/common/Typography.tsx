@@ -2,7 +2,7 @@ interface TypographyProps {
   component: "h1" | "h2" | "h3" | "p" | "span";
   fontFamily?: "FKGrotesk" | "FKGroteskBold";
   fontSize: "20" | "15" | "13";
-  textColor: "brown" | "beige" | "white";
+  textColor?: "brown" | "beige" | "white";
   hoverTextColor?: "brown" | "beige" | "white";
   underline?: boolean;
   uppercase?: boolean;
@@ -14,7 +14,7 @@ export const Typography = ({
   component: Component = "p",
   fontFamily = "FKGrotesk",
   fontSize,
-  textColor = "brown",
+  textColor,
   hoverTextColor,
   underline = false,
   uppercase = false,
