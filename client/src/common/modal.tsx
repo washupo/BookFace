@@ -1,13 +1,18 @@
-import React
- from "react";
+import React from "react";
+import { IconButton } from "./IconButton";
+import { Typography } from "./Typography";
+
+
 interface ModalProps {
     isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    name: string;
     children: React.ReactNode;
     background: "brown" | "white";
     className?: string;
 }
 
-export const Modal = ({ isOpen, children, background, className }: ModalProps) => {
+export const Modal = ({ isOpen, setIsOpen, name, children, background, className }: ModalProps) => {
 
     if (!isOpen) {
         document.body.style.overflow = 'auto';
@@ -19,8 +24,16 @@ export const Modal = ({ isOpen, children, background, className }: ModalProps) =
     const backgroundClass =
         background === "brown" ? "bg-brownPrimary" : "bg-whitePrimary";
 
+    const handleCloseModal = () => {
+        setIsOpen(false);
+    };
+
     return (
         <div className={`${backgroundClass} ${className} fixed top-0 py-30 px-20 z-50 min-h-screen w-screen`}>
+            <hgroup className="flex justify-between">
+                <Typography component='h2' fontFamily="FKGroteskBold" textColor='white' fontSize="20">{name}</Typography>
+                <IconButton onClick={handleCloseModal} name='close' size='small' fill='white' />
+            </hgroup>
             {children}
         </div>
     );
