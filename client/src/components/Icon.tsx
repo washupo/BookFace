@@ -1,4 +1,4 @@
-interface IconProps {
+export interface IconProps {
   name: string;
   size: "small" | "large";
   fill: "brown" | "beige" | "white";
