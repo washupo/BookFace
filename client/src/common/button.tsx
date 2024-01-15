@@ -3,7 +3,7 @@ import { Typography } from "./Typography";
 interface ButtonProps {
   type: "button" | "submit";
   name: string;
-  background: "brown" | "beige";
+  background: "brown" | "white";
   className?: string;
   children?: React.ReactNode;
 }
@@ -28,6 +28,5 @@ export const Button = ({
         </Typography>
       </button>
     </>
-    
   );
 };
