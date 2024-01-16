@@ -1,7 +1,7 @@
 import { Icon, IconProps } from "../components/Icon";
 
 interface IconButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   name: string;
   size: IconProps['size'];
   fill: IconProps['fill'];

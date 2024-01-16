@@ -16,14 +16,22 @@ export const Button = ({
 }: ButtonProps): JSX.Element => {
   const backgroundClass =
     background === "brown" ? "bg-brownPrimary" : "bg-whitePrimary";
+  const textColorClass = background === "brown" ? "text-white" : "text-brown";
 
   return (
     <>
       <button
         type={type}
-        className={`${className} ${backgroundClass} bg-whitePrimary py-15 w-44 rounded-5 hover:bg-beigePrimary transition duration-300 ease-in-out`}
+        className={`${className} ${backgroundClass} py-15 w-44 rounded-5 hover:bg-beigePrimary transition duration-300 ease-in-out`}
+
       >
-        <Typography component="p" fontSize="15" textColor="brown" fontFamily="FKGroteskBold">
+        <Typography
+          component="p"
+          fontSize="15"
+          textColor="brown"
+          fontFamily="FKGroteskBold"
+          className={textColorClass}
+        >
           {name}
         </Typography>
       </button>
