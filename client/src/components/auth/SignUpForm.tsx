@@ -4,84 +4,94 @@ import { Button } from "../../common/button";
 
 interface SignUpFormProps {
   onSubmit: () => void;
-  fields?: {
-    label: string;
-    placeholder: string;
-    type: string;
-    name: string;
-    value: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  }[];
 }
 
-  export const SignUpForm = ({ onSubmit, fields }: SignUpFormProps): JSX.Element => {
+export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
   return (
-    <Form onSubmit={() => {}}>
+    <Form onSubmit={onSubmit}>
       <div className="w-full flex flex-col gap-25">
         {" "}
-        {fields.map((field, index) => (
-          <Input key={index} {...field} />
-        ))}
         <Input
+          as="input"
           label="Nom d'utilisateur"
           placeholder="Nom d'utilisateur"
           type="text"
           name="username"
           value=""
-          onChange={() => {}}
+          color="white"
+          border="bottom"
+          onChange={() => { }}
         />
         <Input
+          as="input"
           label="Espèce"
           placeholder="Chien, chat, etc..."
           type="text"
           name="species"
           value=""
-          onChange={() => {}}
+          color="white"
+          border="bottom"
+          onChange={() => { }}
         />
         <div className="flex gap-x-25">
           <Input
+            as="input"
             label="Genre"
             placeholder="X"
             type="text"
             name="species"
             value=""
+            color="white"
+            border="bottom"
             className="w-1/4"
-            onChange={() => {}}
+            onChange={() => { }}
           />
 
           <Input
+            as="input"
             label="Date de naissance"
             placeholder="DD/MM/YYYY"
             type="text"
             name="species"
             value=""
+            color="white"
+            border="bottom"
             className="w-3/4 "
-            onChange={() => {}}
+            onChange={() => { }}
           />
         </div>
         <Input
+          as="input"
           label="Adresse email"
           placeholder="johndoe@example.com"
           type="text"
           name="species"
           value=""
-          onChange={() => {}}
+          color="white"
+          border="bottom"
+          onChange={() => { }}
         />
         <Input
+          as="input"
           label="Mot de passe"
           placeholder="*********"
           type="text"
           name="username"
           value=""
-          onChange={() => {}}
+          color="white"
+          border="bottom"
+          onChange={() => { }}
         />
         <Input
+          as="input"
           label="Ressaisir mot de passe"
           placeholder="*********"
           type="text"
           name="username"
           value=""
-          onChange={() => {}}
+          color="white"
+          border="bottom"
+          onChange={() => { }}
         />
       </div>
       <Button type="submit" background="white" name="Connexion" />
