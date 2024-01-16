@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import jsonwebtoken from "jsonwebtoken";
 import routes from "./routes/userRoute";
@@ -17,26 +16,8 @@ interface RequestWithUser
 const app = express();
 const port = process.env.PORT || 8000;
 
-const option = {
-  socketTimeoutMS: 30000,
-  keepAlive: true,
-  reconnectTries: 30000,
-};
-
-const mongoURI = process.env.MONGODB_URI;
-mongoose
-  .connect(
-    "mongodb+srv://washupo:Tu6q0SYQcKxsmLBR@bookface.diverrj.mongodb.net/?retryWrites=true&w=majority",
-    option
-  )
-  .then(
-    () => {
-      // Connected successfully
-    },
-    (err) => {
-      // Handle error
-    }
-  );
+// Call the connectToDB function
+connectToDB();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

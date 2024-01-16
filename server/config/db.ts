@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const MONGO_DB_URI: string = process.env.MONGO_REMOTE_URL || "";
 const connectToDB = async () => {

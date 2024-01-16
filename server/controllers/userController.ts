@@ -31,40 +31,33 @@ export const signup = (req: Request, res: Response) => {
       return res.json(user);
     })
     .catch((err: any) => {
+      console.error(err);
       return res.status(400).send({
         message: err,
       });
     });
 };
 
-export const login = (req: Request, res: Response) => {
-  User.findOne(
-    { email: req.body.email },
-    (
-      err: any,
-      user: {
-        comparePassword: (arg0: any) => any;
-        email: any;
-        fullName: any;
-        _id: any;
-      }
-    ) => {
-      if (err) throw err;
+export const login = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
 
-      if (!user || !user.comparePassword(req.body.password)) {
-        return res.status(401).json({
-          message: "Authentication failed. Invalid user or password.",
-        });
-      }
-
-      return res.json({
-        token: jwt.sign(
-          { email: user.email, fullName: user.fullName, _id: user._id },
-          "RESTFULAPIs"
-        ),
+    if (!user || !(user as any).comparePassword(req.body.password)) {
+      return res.status(401).json({
+        message: "Authentication failed. Invalid user or password.",
       });
     }
-  );
+
+    return res.json({
+      token: jwt.sign(
+        { email: user.email, fullName: user.fullName, _id: user._id },
+        "RESTFULAPIs"
+      ),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export const loginRequired = (
