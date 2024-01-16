@@ -1,58 +1,55 @@
-//Importing libraries
-require('dotenv').config();
+import express from "express";
+import bodyParser from "body-parser";
+import jsonwebtoken from "jsonwebtoken";
+import routes from "./routes/userRoute";
 
-let express = require('express');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const http = require('http');
+import { connectToDB } from "./config/db";
+import { Request, Response, NextFunction } from "express";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
+
+interface RequestWithUser
+  extends Request<ParamsDictionary, any, any, ParsedQs> {
+  user?: any; // or the type of your user if you have one
+}
 
 const app = express();
+const port = process.env.PORT || 8000;
 
-//Importing the connectToDB function (main entry to the project) + running the function
-import { connectToDB } from './config/db';
+// Call the connectToDB function
 connectToDB();
 
-// adding node features
-// middleware to parse the body of the request
-app.use(express.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-// middleware to parse the urlencoded data
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
-
-// cors middleware
-if (!process.env.NODE_ENV) {
-    throw new Error('NODE_ENV is not defined');
+app.use(function (req: RequestWithUser, res: Response, next: NextFunction) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.split(" ")[0] === "JWT"
+  ) {
+    jsonwebtoken.verify(
+      req.headers.authorization.split(" ")[1],
+      "RESTFULAPIs",
+      function (err, decode) {
+        if (err) req.user = undefined;
+        req.user = decode;
+        next();
+      }
+    );
+  } else {
+    req.user = undefined;
+    next();
   }
-let origin = process.env.NODE_ENV; // Update with React app's URL
-// const origin = process.env.NODE_ENV !== "production" ? "http://localhost:5173" : "https://www.example.com";
-
-app.use(
-    cors({
-        origin: origin,
-        credentials: true,
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        allowedHeaders: "Content-Type, Authorization",
-    })
-);
-
-// cookie parser middleware
-app.use(cookieParser());
-
-// importing the routes
-const auth = require("./routes/authRoutes");
-
-// using the routes
-app.use("/api/auth", auth);
-
-// importing the verifyToken middleware + applying the verifyToken middleware
-//const verifyToken = require("./middlewares/authMiddleware");
-//app.use("/api/auth/profile", verifyToken);
-
-const server = http.createServer(app);
-
-const PORT = process.env.PORT || 8000;
-
-// listening to the server and logging the port
-server.listen(PORT, async () => {
-    console.log(`Server running on port ${PORT}`);
 });
+
+routes(app);
+
+app.use(function (req, res) {
+  res.status(404).send({ url: req.originalUrl + " not found" });
+});
+
+app.listen(port, () => {
+  console.log("RESTful API server started on: " + port);
+});
+
+export default app;
