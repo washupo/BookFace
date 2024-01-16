@@ -22,7 +22,7 @@ export const Modal = ({ isOpen, setIsOpen, name, children, background, textColor
         return null;
     }
 
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'auto';
 
     const backgroundClass =
         background === "brown" ? "bg-brownPrimary" : "bg-whitePrimary";
@@ -36,7 +36,7 @@ export const Modal = ({ isOpen, setIsOpen, name, children, background, textColor
     };
 
     return (
-        <div className={`${backgroundClass} ${textColorClass} ${className} fixed top-0 py-30 px-20 z-50 min-h-screen w-screen`}>
+        <div className={`${backgroundClass} ${textColorClass} ${className} absolute top-0 py-30 px-20 z-50 min-h-screen w-screen`}>
             <hgroup className="flex justify-between">
                 <Typography component='h2' fontFamily="FKGroteskBold" fontSize="20">{name}</Typography>
                 <IconButton onClick={handleCloseModal} name='close' size='small' fill={fill} />

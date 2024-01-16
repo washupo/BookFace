@@ -2,11 +2,26 @@ import { Input } from "../form/Input";
 import { Form } from "../form/Form";
 import { Button } from "../../common/button";
 
-export const SignUpForm = (): JSX.Element => {
+interface SignUpFormProps {
+  onSubmit: () => void;
+  fields?: {
+    label: string;
+    placeholder: string;
+    type: string;
+    name: string;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  }[];
+}
+
+  export const SignUpForm = ({ onSubmit, fields }: SignUpFormProps): JSX.Element => {
   return (
     <Form onSubmit={() => {}}>
       <div className="w-full flex flex-col gap-25">
         {" "}
+        {fields.map((field, index) => (
+          <Input key={index} {...field} />
+        ))}
         <Input
           label="Nom d'utilisateur"
           placeholder="Nom d'utilisateur"
