@@ -15,15 +15,15 @@ export const Button = ({
   className,
 }: ButtonProps): JSX.Element => {
   const backgroundClass =
-    background === "brown" ? "bg-brownPrimary" : "bg-whitePrimary";
+    background === "brown" ? "bg-brownPrimary text-whitePrimary" : "bg-whitePrimary text-brownPrimary ";
 
   return (
     <>
       <button
         type={type}
-        className={`${className} ${backgroundClass} bg-whitePrimary py-15 w-44 rounded-5 hover:bg-beigePrimary transition duration-300 ease-in-out`}
+        className={`${className} ${backgroundClass} py-15 w-44 rounded-5 hover:bg-beigePrimary transition duration-300 ease-in-out`}
       >
-        <Typography component="p" fontSize="15" textColor="brown" fontFamily="FKGroteskBold">
+        <Typography component="p" fontSize="15" fontFamily="FKGroteskBold">
           {name}
         </Typography>
       </button>
