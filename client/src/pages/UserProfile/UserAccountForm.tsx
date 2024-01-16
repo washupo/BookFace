@@ -6,7 +6,7 @@ interface UserAccountFormProps {
   onSubmit: () => void;
 }
 
-export const UserAccounForm = ({ onSubmit }: UserAccounFormProps): JSX.Element => {
+export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element => {
   return (
     <Form onSubmit={onSubmit}>
       <div className="w-full flex flex-col gap-25">
@@ -106,7 +106,7 @@ export const UserAccounForm = ({ onSubmit }: UserAccounFormProps): JSX.Element =
           onChange={() => { }}
         />
       </div>
-      <Button type="submit" background="white" name="Connexion" />
+      <Button type="submit" background="brown" name="Connexion" />
     </Form>
   );
 };
