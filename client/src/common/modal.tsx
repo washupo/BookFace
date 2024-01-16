@@ -56,7 +56,9 @@ export const Modal = ({
           fill={fill}
         />
       </hgroup>
-      <div className="flex flex-col items-center gap-30 min-h-screen overflow-y-auto">{children}</div>
+      <div className="w-full flex flex-col gap-30 min-h-screen overflow-y-auto">
+        {children}
+      </div>
     </div>
   );
 };

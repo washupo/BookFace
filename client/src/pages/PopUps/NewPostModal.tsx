@@ -59,14 +59,13 @@ export const PostModal = ({ isOpen, setIsOpen, className }: PostModalProps) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       background="white"
-      className={className}
+      className={`${className}`}
       name="Poster"
       textColor="brown"
       fill="brown"
     >
-      <div className="w-full flex flex-col gap-30 items-center">
+      <div className="w-full flex flex-col gap-30">
         <img src={croppedImage || maskImage} alt="Selected" className="mask" />
-
         <label>
           <input
             type="file"
@@ -88,7 +87,7 @@ export const PostModal = ({ isOpen, setIsOpen, className }: PostModalProps) => {
         placeholder="Ajouter une légende..."
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
-        className="w-full h-40 bg-transparent border-2 rounded-5 p-20 border-brownPrimary focus:outline-none"
+        className="w-full h-40 bg-whitePrimary border-2 rounded-5 p-20 border-brownPrimary focus:outline-none"
         rows={3}
       />
       <Button type="submit" background="brown" name="Poster" />
