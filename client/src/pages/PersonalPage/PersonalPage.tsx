@@ -22,14 +22,14 @@ export default function PersonalPage({ username }: PersonalPageProps) {
     <>
       <Layout
         background="white"
-        className="min-h-screen py-30 px-20 flex flex-col gap-30">
+        className="min-h-screen py-30 px-20 flex flex-col gap-30 pb-36"
+        isModalOpen={popUpUser}>
 
         <hgroup className="flex justify-between">
           <Typography component='h2' fontFamily="FKGroteskBold" textColor="brown" fontSize="20">username</Typography>
           {/* <Typography component='h2' fontFamily="FKGroteskBold" fontSize="20">{username}</Typography> */}
           <IconButton onClick={userPopUp} name='settings' size='small' fill='brown' />
         </hgroup>
-        {popUpUser && <UserModal isOpen={popUpUser} setIsOpen={setPopUpUser} />}
 
         <div className="flex flex-col gap-15">
           <div className="flex gap-10 items-center">
@@ -55,7 +55,7 @@ export default function PersonalPage({ username }: PersonalPageProps) {
             </div>
 
           </div>
-          
+
           <section>
             <Typography component='p' fontFamily="FKGroteskBold" fontSize="15" textColor="brown">username</Typography>
             {/* <Typography component='p' fontFamily="FKGroteskBold" fontSize="15" textColor="brown">username</Typography> */}
@@ -70,7 +70,6 @@ export default function PersonalPage({ username }: PersonalPageProps) {
           </button>
           {/* onClick={ } */}
         </div>
-
 
         {/*<div className='flex gap-3'>
         {menus.map(menu => (
@@ -91,6 +90,7 @@ export default function PersonalPage({ username }: PersonalPageProps) {
         </div>*/}
       </Layout>
       <NavBar />
+      {popUpUser && <UserModal isOpen={popUpUser} setIsOpen={setPopUpUser} />}
     </>
   )
 } 
