@@ -1,6 +1,7 @@
 // controllers/profileControllers.ts
 import { Request, Response } from "express";
 import Profile from "../models/profileModels";
+import User from "../models/userModels";
 import { RequestWithUser } from "../server"; // Update the path accordingly
 
 export const getProfile = async (req: RequestWithUser, res: Response) => {
@@ -14,13 +15,20 @@ export const getProfile = async (req: RequestWithUser, res: Response) => {
     const userProfile = await Profile.findOne({ userId: user._id });
 
     if (userProfile) {
-      // Combine user data and profile data
-      const completeProfile = {
-        user: user,
-        profile: userProfile,
-      };
+      // Retrieve user details from the User model
+      const userDetails = await User.findById(user._id);
 
-      return res.json(completeProfile);
+      if (userDetails) {
+        // Combine user data and profile data
+        const completeProfile = {
+          user: userDetails,
+          profile: userProfile,
+        };
+
+        return res.json(completeProfile);
+      } else {
+        return res.status(404).json({ message: "User not found" });
+      }
     } else {
       return res.status(404).json({ message: "Profile not found" });
     }
