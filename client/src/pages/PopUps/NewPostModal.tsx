@@ -3,6 +3,7 @@ import { Modal } from "../../common/Modal";
 import { Button } from "../../common/button";
 import { IconButton } from "../../common/IconButton";
 import maskImage from "../../assets/images/masque.svg";
+import axios from "axios";
 
 interface PostModalProps {
   isOpen: boolean;
@@ -17,20 +18,23 @@ export const PostModal = ({ isOpen, setIsOpen, className }: PostModalProps) => {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  /* Gestion du chargement de l'image sélectionnée */
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setSelectedImage(file);
-      setCroppedImage(""); // Réinitialiser l'image recadrée avec une chaîne vide
+      setCroppedImage(""); // Reset cropped image
     }
   };
 
+  // Ouvrir sélecteur de fichier
   const openFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
+  // Gérer image sélectionnée
   useEffect(() => {
     if (selectedImage) {
       const reader = new FileReader();
@@ -53,6 +57,27 @@ export const PostModal = ({ isOpen, setIsOpen, className }: PostModalProps) => {
       reader.readAsDataURL(selectedImage);
     }
   }, [selectedImage]);
+
+  /* Connexion Backend */
+  const createPost = async () => {
+    const formData = new FormData();
+    formData.append("image", selectedImage as File);
+    formData.append("caption", caption);
+
+    try {
+      // Envoyer requête POST
+      const response = await axios.post("/api/posts", formData);
+
+      // Gérer réponse
+      console.log("Post créé avec succès :", response.data);
+
+      // Fermer modale
+      setIsOpen(false);
+    } catch (error) {
+      // Gérer erreur
+      console.error("Error creating post:", error);
+    }
+  };
 
   return (
     <Modal
@@ -90,7 +115,12 @@ export const PostModal = ({ isOpen, setIsOpen, className }: PostModalProps) => {
         className="w-full h-40 bg-whitePrimary border-2 rounded-5 p-20 border-brownPrimary focus:outline-none"
         rows={3}
       />
-      <Button type="submit" background="brown" name="Poster" />
+      <Button
+        type="submit"
+        background="brown"
+        name="Poster"
+        onClick={createPost}
+      />
     </Modal>
   );
 };

@@ -6,6 +6,7 @@ interface ButtonProps {
   background: "brown" | "white";
   className?: string;
   children?: React.ReactNode;
+  onClick?: () => void;
 }
 
 export const Button = ({
@@ -22,7 +23,6 @@ export const Button = ({
       <button
         type={type}
         className={`${className} ${backgroundClass} py-15 w-44 rounded-5 hover:bg-beigePrimary transition duration-300 ease-in-out`}
-
       >
         <Typography component="p" fontSize="15" fontFamily="FKGroteskBold">
           {name}
