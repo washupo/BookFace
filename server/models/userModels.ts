@@ -56,4 +56,7 @@ UserSchema.methods.comparePassword = function (password: string): boolean {
   return bcrypt.compareSync(password, this.hash_password);
 };
 
+UserSchema.statics.findById = function (userId: mongoose.Types.ObjectId) {
+  return this.findOne({ _id: userId });
+};
 export default mongoose.model<User>("User", UserSchema);

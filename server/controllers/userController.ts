@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../models/userModels";
 import Profile from "../models/profileModels";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import * as mongoose from "mongoose";
 import { ParamsDictionary } from "express-serve-static-core";
