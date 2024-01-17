@@ -20,8 +20,8 @@
 
 
 .mask {
-  width: auto;
-  height: 100%;
+  /* width: auto;
+  height: 100%; */
   -webkit-mask-image: url(./assets/images/masque.svg);
   mask-image: url(./assets/images/masque.svg);
   -webkit-mask-position: top left;

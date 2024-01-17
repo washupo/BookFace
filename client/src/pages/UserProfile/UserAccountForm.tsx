@@ -1,16 +1,28 @@
-import { Input } from "../form/Input";
-import { Form } from "../form/Form";
+import { Input } from "../../components/form/Input";
+import { Form } from "../../components/form/Form";
 import { Button } from "../../common/button";
 
-interface SignUpFormProps {
+interface UserAccountFormProps {
   onSubmit: () => void;
 }
 
-export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
+export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element => {
   return (
     <Form onSubmit={onSubmit}>
       <div className="w-full flex flex-col gap-25">
         {" "}
+        <Input
+          as="textarea"
+          label="Nom d'utilisateur"
+          placeholder="Nom d'utilisateur"
+          type="text"
+          name="username"
+          value=""
+          color="brown"
+          border="all"
+          gap={true}
+          onChange={() => { }}
+        />
         <Input
           as="input"
           label="Nom d'utilisateur"
@@ -18,7 +30,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           type="text"
           name="username"
           value=""
-          color="white"
+          color="brown"
           border="bottom"
           onChange={() => { }}
         />
@@ -29,7 +41,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           type="text"
           name="species"
           value=""
-          color="white"
+          color="brown"
           border="bottom"
           onChange={() => { }}
         />
@@ -41,7 +53,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
             type="text"
             name="species"
             value=""
-            color="white"
+            color="brown"
             border="bottom"
             className="w-1/4"
             onChange={() => { }}
@@ -54,7 +66,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
             type="text"
             name="species"
             value=""
-            color="white"
+            color="brown"
             border="bottom"
             className="w-3/4 "
             onChange={() => { }}
@@ -67,7 +79,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           type="text"
           name="species"
           value=""
-          color="white"
+          color="brown"
           border="bottom"
           onChange={() => { }}
         />
@@ -78,7 +90,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           type="text"
           name="username"
           value=""
-          color="white"
+          color="brown"
           border="bottom"
           onChange={() => { }}
         />
@@ -89,12 +101,12 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           type="text"
           name="username"
           value=""
-          color="white"
+          color="brown"
           border="bottom"
           onChange={() => { }}
         />
       </div>
-      <Button type="submit" background="white" name="Connexion" />
+      <Button type="submit" background="brown" name="Connexion" />
     </Form>
   );
 };

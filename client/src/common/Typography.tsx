@@ -1,5 +1,5 @@
 interface TypographyProps {
-  component: "h1" | "h2" | "h3" | "p" | "span";
+  component: "h1" | "h2" | "h3" | "p" | "span" | "label";
   fontFamily?: "FKGrotesk" | "FKGroteskBold";
   fontSize: "20" | "15" | "13";
   textColor?: "brown" | "beige" | "white";
@@ -74,3 +74,16 @@ export const Typography = ({
     </Component>
   );
 };
+
+{/* <Typography
+  component="h1"
+  fontFamily="FKGrotesk"
+  fontSize="20"
+  textColor="brown"
+  hoverTextColor="beige"
+  underline={true}
+  uppercase={true}
+  className="my-custom-class"
+>
+  Ceci est un titre
+</Typography> */}
