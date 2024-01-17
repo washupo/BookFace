@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import jsonwebtoken from "jsonwebtoken";
 import routes from "./routes/userRoute";
+import cors from "cors";
 
 import { connectToDB } from "./config/db";
 import { Request, Response, NextFunction } from "express";
@@ -21,6 +22,8 @@ connectToDB();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use(function (req: RequestWithUser, res: Response, next: NextFunction) {
   if (
