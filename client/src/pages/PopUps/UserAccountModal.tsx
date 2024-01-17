@@ -5,10 +5,9 @@ import profilPicture from '../../assets/images/profilPictureTest.png';
 
 
 interface UserModalProps {
-    isOpen: boolean;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    className?: string;
-
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string;
 }
 
 export const UserModal = ({ isOpen, setIsOpen, className }: UserModalProps) => {
