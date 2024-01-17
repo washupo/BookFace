@@ -8,7 +8,7 @@ import { Button } from "../../common/button";
 
 export const LoginForm = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   })
 
@@ -65,7 +65,7 @@ export const LoginForm = (): JSX.Element => {
           placeholder="Nom d'utilisateur"
           type="text"
           name="username"
-          value={credentials.username}
+          value={credentials.email}
           color="white"
           border="bottom"
           onChange={handleChange}
