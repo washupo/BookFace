@@ -79,7 +79,7 @@ export const Input = ({
           required={required}
           className={`
           bg-transparent outline-none font-fkGroteskBold                 
-            ${error ? "border-red/50" : "border-white/5"}
+            ${error ? "border-red/50" : ""}
             ${colorClass}
             ${borderClass}
             ${requiredClass}
