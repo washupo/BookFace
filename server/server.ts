@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 
-interface RequestWithUser
+export interface RequestWithUser
   extends Request<ParamsDictionary, any, any, ParsedQs> {
   user?: any; // or the type of your user if you have one
 }

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../models/userModels";
+import Profile from "../models/profileModels";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import * as mongoose from "mongoose";
@@ -72,15 +73,31 @@ export const loginRequired = (
   }
 };
 
-export const profile = (
+export const profile = async (
   req: RequestWithUser,
   res: Response,
   next: NextFunction
 ) => {
-  if (req.user) {
-    res.send(req.user);
-    next();
-  } else {
-    return res.status(401).json({ message: "Invalid token" });
+  try {
+    const user = req.user;
+    if (!user) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    const userProfile = await Profile.findOne({ userId: user._id });
+
+    if (userProfile) {
+      const completeProfile = {
+        user: user,
+        profile: userProfile,
+      };
+
+      return res.json(completeProfile);
+    } else {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
