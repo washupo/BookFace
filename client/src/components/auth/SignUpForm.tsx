@@ -133,6 +133,18 @@ export const SignUpForm = () => {
           border="bottom"
           onChange={handleChange}
         />
+        <Input
+          as="textarea"
+          label="Bio"
+          placeholder="Ajoutez une petite description pour vous présenter 🐶😺🐰"
+          type="text"
+          name="username"
+          value=""
+          color="white"
+          border="all"
+          gap={true}
+          onChange={() => { }}
+        />
       </div>
       <Button type="submit" background="white" name="Connexion" />
     </Form>
