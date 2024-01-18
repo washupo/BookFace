@@ -62,8 +62,8 @@ export const LoginForm = (): JSX.Element => {
         <div className="w-full flex flex-col gap-25">
           <Input
             as="input"
-            label="Nom d'utilisateur"
-            placeholder="Nom d'utilisateur"
+            label="Email"
+            placeholder="Email"
             type="text"
             name="email"
             value={credentials.email}
