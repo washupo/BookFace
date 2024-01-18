@@ -4,42 +4,30 @@ import { Typography } from "./Typography";
 import { IconProps } from "../components/Icon";
 
 interface ModalProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   children: React.ReactNode;
   background: "brown" | "white";
   textColor: "brown" | "white";
   className?: string;
   fill: IconProps["fill"];
+  handleCloseModal: () => void;
 }
 
 export const Modal = ({
-  isOpen,
-  setIsOpen,
   name,
   children,
   background,
   textColor,
   fill,
   className,
+  handleCloseModal,
 }: ModalProps) => {
-  if (!isOpen) {
-    document.body.style.overflow = "auto";
-    return null;
-  }
-
-  document.body.style.overflow = "hidden";
-
+  
   const backgroundClass =
     background === "brown" ? "bg-brownPrimary" : "bg-whitePrimary";
 
   const textColorClass =
     textColor === "brown" ? "text-brownPrimary" : "text-whitePrimary";
-
-  const handleCloseModal = () => {
-    setIsOpen(false);
-  };
 
   return (
     <div
