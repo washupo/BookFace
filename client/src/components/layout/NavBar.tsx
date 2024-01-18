@@ -9,9 +9,10 @@ import { SearchModal } from "../../pages/PopUps/SearchModal";
 import { PostModal } from "../../pages/PopUps/NewPostModal";
 import { NotifModal } from "../../pages/PopUps/NotificationModal";
 
+import { disableBodyScroll, enableBodyScroll  } from "../../BodyScroll";
+
 type NavBarProps = {
   className?: string;
-  // Include other props that NavBar can accept...
 };
 
 export const NavBar = ({ className }: NavBarProps) => {
@@ -19,9 +20,35 @@ export const NavBar = ({ className }: NavBarProps) => {
   const [popUpPost, setPopUpPost] = useState(false);
   const [popUpNotif, setPopUpNotif] = useState(false);
 
-  const searchPopUp = () => setPopUpSearch(true);
-  const postPopUp = () => setPopUpPost(true);
-  const notifPopUp = () => setPopUpNotif(true);
+  const openSearchPopUp = () => {
+    setPopUpSearch(true);
+    disableBodyScroll({ savePosition: true });  
+  };
+
+  const openPostPopUp = () => {
+    setPopUpPost(true);
+    disableBodyScroll({ savePosition: true });  
+  };
+
+  const openNotifPopUp = () => {
+    setPopUpNotif(true);
+    disableBodyScroll({ savePosition: true });  
+  };
+
+  const closeSearchPopUp = () => {
+    setPopUpSearch(true);
+    enableBodyScroll();  
+  };
+
+  const closePostPopUp = () => {
+    setPopUpPost(true);
+    enableBodyScroll();  
+  };
+  
+  const closeNotifPopUp = () => {
+    setPopUpNotif(false);
+    enableBodyScroll();  
+  };
 
   return (
     <>
@@ -34,21 +61,21 @@ export const NavBar = ({ className }: NavBarProps) => {
           </Link>
 
           <IconButton
-            onClick={searchPopUp}
+            onClick={openSearchPopUp}
             name="search"
             size="small"
             fill="white"
           />
 
           <IconButton
-            onClick={postPopUp}
+            onClick={openPostPopUp}
             name="post"
             size="small"
             fill="white"
           />
 
           <IconButton
-            onClick={notifPopUp}
+            onClick={openNotifPopUp}
             name="like"
             size="small"
             fill="white"
@@ -65,11 +92,11 @@ export const NavBar = ({ className }: NavBarProps) => {
       </div>
 
       {popUpSearch && (
-        <SearchModal isOpen={popUpSearch} setIsOpen={setPopUpSearch} />
+        <SearchModal handleCloseModal={closeSearchPopUp} />
       )}
-      {popUpPost && <PostModal isOpen={popUpPost} setIsOpen={setPopUpPost} />}
+      {popUpPost && <PostModal handleCloseModal={closePostPopUp} setIsOpen={openPostPopUp}/>}
       {popUpNotif && (
-        <NotifModal isOpen={popUpNotif} setIsOpen={setPopUpNotif} />
+        <NotifModal handleCloseModal={closeNotifPopUp} />
       )}
     </>
   );

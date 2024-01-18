@@ -18,7 +18,6 @@ export const NotifModal = ({ className, handleCloseModal }: NotifModalProps) => 
             handleCloseModal={handleCloseModal}
         >
             <p>Ceci est un exemple de contenu de modal.</p>
-
         </Modal>
     )
 }

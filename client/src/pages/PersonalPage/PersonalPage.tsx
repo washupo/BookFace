@@ -6,29 +6,36 @@ import { Layout } from "../../components/layout/Layout";
 import { NavBar } from "../../components/layout/NavBar";
 
 import { UserModal } from "../PopUps/UserAccountModal";
+import { disableBodyScroll, enableBodyScroll } from "../../BodyScroll";
 
 import profilPicture from '../../assets/images/profilPictureTest.png';
 
-interface PersonalPageProps {
-  username?: string;
-}
 
-export default function PersonalPage({ username }: PersonalPageProps) {
+
+export default function PersonalPage() {
   const [popUpUser, setPopUpUser] = useState(false);
 
-  const userPopUp = () => setPopUpUser(!popUpUser);
+  const openPopUpUser = () => {
+    setPopUpUser(true);
+    disableBodyScroll({ savePosition: true });  
+  };
+
+  const closePopUpUser = () => {
+    setPopUpUser(true);
+    enableBodyScroll();  
+  };
 
   return (
     <>
       <Layout
         background="white"
         className="min-h-screen py-30 px-20 flex flex-col gap-30 pb-36"
-        isModalOpen={popUpUser}>
+      >
 
         <hgroup className="flex justify-between">
           <Typography component='h2' fontFamily="FKGroteskBold" textColor="brown" fontSize="20">username</Typography>
           {/* <Typography component='h2' fontFamily="FKGroteskBold" fontSize="20">{username}</Typography> */}
-          <IconButton onClick={userPopUp} name='settings' size='small' fill='brown' />
+          <IconButton onClick={openPopUpUser} name='settings' size='small' fill='brown' />
         </hgroup>
 
         <div className="flex flex-col gap-15">
@@ -71,6 +78,10 @@ export default function PersonalPage({ username }: PersonalPageProps) {
           {/* onClick={ } */}
         </div>
 
+          <div className="bg-red-400 h-[300vh]">
+          <span>...</span>
+        </div>
+
         {/*<div className='flex gap-3'>
         {menus.map(menu => (
           <div
@@ -90,7 +101,7 @@ export default function PersonalPage({ username }: PersonalPageProps) {
         </div>*/}
       </Layout>
       <NavBar />
-      {popUpUser && <UserModal isOpen={popUpUser} setIsOpen={setPopUpUser} />}
+      {popUpUser && <UserModal handleCloseModal={closePopUpUser}  />}
     </>
   )
 } 
