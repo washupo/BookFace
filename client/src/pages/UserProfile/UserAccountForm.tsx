@@ -1,12 +1,32 @@
 import { Input } from "../../components/form/Input";
 import { Form } from "../../components/form/Form";
 import { Button } from "../../common/button";
+// import { api } from "../../API/api";
+
 
 interface UserAccountFormProps {
   onSubmit: () => void;
 }
 
 export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element => {
+
+   // const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await api.get("/profile");
+  //       setUser(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchUser();
+  // }, []);
+
+  // if (!user) {
+  //   return <div>Loading...</div>; }
+
   return (
     <Form onSubmit={onSubmit}>
       <div className="w-full flex flex-col gap-25">

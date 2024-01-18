@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { api } from "../../API/api";
 
 import { Input } from "../form/Input";
 import { Form } from "../form/Form";
@@ -12,22 +12,7 @@ export const LoginForm = (): JSX.Element => {
     password: "",
   })
 
-  // const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const response = await api.get("/profile");
-  //       setUser(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
-
-  // if (!user) {
-  //   return <div>Loading...</div>; }
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCredentials({
@@ -44,47 +29,63 @@ export const LoginForm = (): JSX.Element => {
         credentials
       );
 
-      const { token, refreshToken } = response.data;
+      // Vérifier que la requête est réussie, vous pouvez traiter la réponse ici
+      console.log("Réponse du serveur :", response.data);
+      // console.log('Authentification réussie !');
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-      console.log('Authentification réussie !');
+      // Rediriger l'utilisateur vers homepage
+      navigate("/homepage");
+
+      // Extraction des tokens du champ data de l'objet response
+      const { token } = response.data;
+
+      //Stockage de la valeur du token dans le localStorage(dans le stockage local du navigateur)
+      localStorage.setItem("token", token); 
+      
+      // Stockage du refreshToken dans le localStorage pour obtenir de nouveaux jetons d'accès lorsque le jeton d'accès actuel expire. 
+      // localStorage.setItem("refreshToken", refreshToken);
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.error('Échec de l\'authentification :', error.response?.data?.message);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
+
+
     }
   };
 
   return (
     <>
-    
-    <Form onSubmit={handleSubmit}>
-      <div className="w-full flex flex-col gap-25">
-        <Input
-          as="input"
-          label="Nom d'utilisateur"
-          placeholder="Nom d'utilisateur"
-          type="text"
-          name="username"
-          value={credentials.email}
-          color="white"
-          border="bottom"
-          onChange={handleChange}
-        />
 
-        <Input
-          as="input"
-          label="Mot de passe"
-          placeholder="*********"
-          type="text"
-          name="username"
-          value={credentials.password}
-          color="white"
-          border="bottom"
-          onChange={handleChange}
-        />
-      </div>
-      <Button type="submit" background="white" name="Connexion" />
-    </Form>
+      <Form onSubmit={handleSubmit}>
+        <div className="w-full flex flex-col gap-25">
+          <Input
+            as="input"
+            label="Email"
+            placeholder="Email"
+            type="text"
+            name="email"
+            value={credentials.email}
+            color="white"
+            border="bottom"
+            onChange={handleChange}
+          />
+
+          <Input
+            as="input"
+            label="Mot de passe"
+            placeholder="*********"
+            type="password"
+            name="password"
+            value={credentials.password}
+            color="white"
+            border="bottom"
+            onChange={handleChange}
+          />
+        </div>
+        <Button type="submit" background="white" name="Connexion" />
+      </Form>
     </>
   );
 };
