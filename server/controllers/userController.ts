@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import User from "../models/userModels";
-import Profile from "../models/profileModels";
+import { User } from "../models/userModels";
+import { Profile } from "../models/profileModels";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import * as mongoose from "mongoose";
@@ -13,30 +13,35 @@ interface RequestWithUser
   user?: any; // or the type of your user if you have one
 }
 
-export const signup = (req: Request, res: Response) => {
-  const newUser = new User({
-    fullName: req.body.fullName,
-    email: req.body.email,
-    hash_password: bcrypt.hashSync(req.body.password, 10),
-    username: req.body.username,
-    species: req.body.species,
-    address: req.body.address,
-    gender: req.body.gender,
-    created: new Date(),
-  });
-
-  newUser
-    .save()
-    .then((user: any) => {
-      user.hash_password = undefined;
-      return res.json(user);
-    })
-    .catch((err: any) => {
-      console.error(err);
-      return res.status(400).send({
-        message: err,
-      });
+export const signup = async (req: Request, res: Response) => {
+  try {
+    const newUser = new User({
+      fullName: req.body.fullName,
+      email: req.body.email,
+      hash_password: bcrypt.hashSync(req.body.password, 10),
+      username: req.body.username,
+      species: req.body.species,
+      birthdate: req.body.birthdate,
+      gender: req.body.gender,
+      created: new Date(),
     });
+
+    const savedUser = await newUser.save();
+
+    // Create a profile for the newly registered user
+    const newProfile = new Profile({
+      userId: savedUser._id,
+      // Add other profile fields as needed
+    });
+
+    const savedProfile = await newProfile.save();
+
+    savedUser.hash_password = "";
+    return res.json({ user: savedUser, profile: savedProfile });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ message: "Registration failed" });
+  }
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -73,29 +78,60 @@ export const loginRequired = (
   }
 };
 
-export const profile = async (
+export const profile = (
   req: RequestWithUser,
   res: Response,
   next: NextFunction
 ) => {
+  if (req.user) {
+    res.send(req.user);
+    next();
+  } else {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+export const updateProfile = async (req: RequestWithUser, res: Response) => {
   try {
-    const user = req.user;
+    const userId = req.user._id;
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+
     if (!user) {
-      return res.status(401).json({ message: "Invalid token" });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    const userProfile = await Profile.findOne({ userId: user._id });
+    // Update user information
+    await user.updateOne({
+      fullName: req.body.fullName,
+      species: req.body.species,
+      address: req.body.address,
+      gender: req.body.gender,
+      // Add other fields as needed
+    });
 
-    if (userProfile) {
-      const completeProfile = {
-        user: user,
-        profile: userProfile,
-      };
+    // Return the updated user
+    const updatedUser = await User.findById(userId);
+    return res.json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-      return res.json(completeProfile);
-    } else {
+export const getProfile = async (req: RequestWithUser, res: Response) => {
+  try {
+    const userId = req.user._id;
+
+    // Check if a profile already exists for the user
+    const existingProfile = await Profile.findOne({ userId });
+
+    if (!existingProfile) {
       return res.status(404).json({ message: "Profile not found" });
     }
+
+    return res.json(existingProfile);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });

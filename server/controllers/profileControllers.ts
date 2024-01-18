@@ -1,37 +1,41 @@
-// controllers/profileControllers.ts
+// controllers/profileController.ts
 import { Request, Response } from "express";
-import Profile from "../models/profileModels";
-import User from "../models/userModels";
-import { RequestWithUser } from "../server"; // Update the path accordingly
+import { RequestWithUser } from "../server";
+import { User } from "../models/userModels";
+import { Profile } from "../models/profileModels";
 
-export const getProfile = async (req: RequestWithUser, res: Response) => {
+export const createProfile = async (req: RequestWithUser, res: Response) => {
   try {
-    const user = req.user;
-    if (!user) {
-      return res.status(401).json({ message: "Invalid token" });
+    const userId = req.user._id;
+
+    // Check if a profile already exists for the user
+    const existingProfile = await Profile.findOne({ userId });
+
+    if (existingProfile) {
+      return res
+        .status(400)
+        .json({ message: "Profile already exists for the user" });
     }
 
-    // Retrieve user profile
-    const userProfile = await Profile.findOne({ userId: user._id });
+    // Retrieve user details
+    const userDetails = await User.findById(userId);
 
-    if (userProfile) {
-      // Retrieve user details from the User model
-      const userDetails = await User.findById(user._id);
-
-      if (userDetails) {
-        // Combine user data and profile data
-        const completeProfile = {
-          user: userDetails,
-          profile: userProfile,
-        };
-
-        return res.json(completeProfile);
-      } else {
-        return res.status(404).json({ message: "User not found" });
-      }
-    } else {
-      return res.status(404).json({ message: "Profile not found" });
+    if (!userDetails) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    // Create a new profile
+    const newProfile = new Profile({
+      userId,
+      bio: req.body.bio,
+      avatar: req.body.avatar,
+      // Add other profile fields as needed
+    });
+
+    // Save the profile to the database
+    const savedProfile = await newProfile.save();
+
+    return res.status(201).json(savedProfile);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });

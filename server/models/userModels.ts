@@ -12,7 +12,7 @@ interface User {
   hash_password: string;
   created: Date;
   species: string;
-  address: string;
+  birthdate: Date;
   gender: string;
 }
 
@@ -40,11 +40,8 @@ const UserSchema = new Schema<User>({
     type: String,
     trim: true,
   },
-  address: {
-    street: String,
-    city: String,
-    state: String,
-    zipcode: String,
+  birthdate: {
+    type: Date,
   },
   gender: {
     type: String,
@@ -59,4 +56,10 @@ UserSchema.methods.comparePassword = function (password: string): boolean {
 UserSchema.statics.findById = function (userId: mongoose.Types.ObjectId) {
   return this.findOne({ _id: userId });
 };
-export default mongoose.model<User>("User", UserSchema);
+
+// Add a method for updating user information
+UserSchema.methods.updateProfile = function (updateData: Partial<User>) {
+  Object.assign(this, updateData);
+  return this.save();
+};
+export const User = mongoose.model<User>("User", UserSchema);

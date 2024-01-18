@@ -10,11 +10,13 @@ export default function (app: Application) {
 
   app.route("/auth/login").post(userHandlers.login);
 
-  app
-    .route("/profile")
-    .get(userHandlers.loginRequired, profileHandlers.getProfile);
+  app.route("/profile").get(userHandlers.loginRequired, userHandlers.profile);
 
   app
     .route("/profile")
-    .post(userHandlers.loginRequired, profileHandlers.getProfile);
+    .post(userHandlers.loginRequired, profileHandlers.createProfile);
+
+  app
+    .route("/profile/:id")
+    .put(userHandlers.loginRequired, userHandlers.updateProfile);
 }
