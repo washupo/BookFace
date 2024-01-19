@@ -69,7 +69,8 @@ export const Post = ({ post, onUpdate }: PostProps) => {
   );
 };
  */
-
+// Post.tsx
+// Post.tsx
 import { useState } from "react";
 import { PostData } from "../data/types";
 import { ProfilPicture } from "./ProfilPicture";
@@ -85,7 +86,6 @@ interface PostProps {
 
 export const Post = ({ post, onUpdate, className }: PostProps) => {
   const [popUpComment, setPopUpComment] = useState(false);
-  const [newComment, setNewComment] = useState("");
   const [newLike, setNewLike] = useState(false);
 
   /* Modal Comment */
@@ -129,15 +129,6 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
     };
 
     setNewLike(!newLike);
-    onUpdate(updatedPost);
-  };
-
-  /* Comments */
-  const handleComment = () => {
-    // Met à jour les données fictives pour simuler l'ajout de commentaire
-    const updatedPost = { ...post, comments: [...post.comments, newComment] };
-
-    setNewComment("");
     onUpdate(updatedPost);
   };
 
@@ -224,24 +215,20 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
           Voir {post.comments.length} commentaires
         </Typography>
 
-        <div className="mt-2">
-          <input
-            type="text"
-            className="border rounded p-2 w-full"
-            placeholder="Ajouter un commentaire"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 focus:outline-none"
-            onClick={handleComment}
-          >
-            Commenter
-          </button>
-        </div>
       </footer>
 
-      {popUpComment && <CommentModal handleCloseModal={closeCommentPopUp} />}
+      {popUpComment && (
+        <CommentModal
+          className="comment-modal"
+          handleCloseModal={closeCommentPopUp}
+          comments={post.comments}
+          onAddComment={(comment) => {
+            // Cette fonction sera appelée depuis le modal pour ajouter un commentaire.
+            const updatedPost = { ...post, comments: [...post.comments, comment] };
+            onUpdate(updatedPost);
+          }}
+        />
+      )}
     </article>
   );
 };
