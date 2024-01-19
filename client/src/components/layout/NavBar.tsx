@@ -2,14 +2,13 @@ import { useState } from "react";
 import { Icon } from "../Icon";
 import { Link } from "react-router-dom";
 import { IconButton } from "../../common/IconButton";
-
 import profilPicture from "../../assets/images/profilPictureTest.png";
-
+/* import Modal */
 import { SearchModal } from "../../pages/PopUps/SearchModal";
 import { PostModal } from "../../pages/PopUps/NewPostModal";
 import { NotifModal } from "../../pages/PopUps/NotificationModal";
-
-import { disableBodyScroll, enableBodyScroll  } from "../../BodyScroll";
+/* Fix Scroll modal */
+import { disableBodyScroll, enableBodyScroll } from "../../BodyScroll";
 
 type NavBarProps = {
   className?: string;
@@ -22,32 +21,32 @@ export const NavBar = ({ className }: NavBarProps) => {
 
   const openSearchPopUp = () => {
     setPopUpSearch(true);
-    disableBodyScroll({ savePosition: true });  
+    disableBodyScroll({ savePosition: true });
   };
 
   const openPostPopUp = () => {
     setPopUpPost(true);
-    disableBodyScroll({ savePosition: true });  
+    disableBodyScroll({ savePosition: true });
   };
 
   const openNotifPopUp = () => {
     setPopUpNotif(true);
-    disableBodyScroll({ savePosition: true });  
+    disableBodyScroll({ savePosition: true });
   };
 
   const closeSearchPopUp = () => {
     setPopUpSearch(false);
-    enableBodyScroll();  
+    enableBodyScroll();
   };
 
   const closePostPopUp = () => {
     setPopUpPost(false);
-    enableBodyScroll();  
+    enableBodyScroll();
   };
-  
+
   const closeNotifPopUp = () => {
     setPopUpNotif(false);
-    enableBodyScroll();  
+    enableBodyScroll();
   };
 
   return (
@@ -91,13 +90,14 @@ export const NavBar = ({ className }: NavBarProps) => {
         </div>
       </div>
 
-      {popUpSearch && (
-        <SearchModal handleCloseModal={closeSearchPopUp} />
+      {popUpSearch && <SearchModal handleCloseModal={closeSearchPopUp} />}
+      {popUpPost && (
+        <PostModal
+          handleCloseModal={closePostPopUp}
+          setIsOpen={openPostPopUp}
+        />
       )}
-      {popUpPost && <PostModal handleCloseModal={closePostPopUp} setIsOpen={openPostPopUp}/>}
-      {popUpNotif && (
-        <NotifModal handleCloseModal={closeNotifPopUp} />
-      )}
+      {popUpNotif && <NotifModal handleCloseModal={closeNotifPopUp} />}
     </>
   );
 };

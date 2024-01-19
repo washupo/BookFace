@@ -69,23 +69,34 @@ export const Post = ({ post, onUpdate }: PostProps) => {
   );
 };
  */
-
+// Post.tsx
+// Post.tsx
 import { useState } from "react";
 import { PostData } from "../data/types";
 import { ProfilPicture } from "./ProfilPicture";
 import { Typography } from "../common/Typography";
 import { IconButton } from "../common/IconButton";
+import { CommentModal } from "../pages/PopUps/CommentModal";
 
 interface PostProps {
   post: PostData;
   onUpdate: (updatedPost: PostData) => void;
+  className?: string;
 }
 
-export const Post = ({ post, onUpdate }: PostProps) => {
-  const [newComment, setNewComment] = useState("");
+export const Post = ({ post, onUpdate, className }: PostProps) => {
+  const [popUpComment, setPopUpComment] = useState(false);
   const [newLike, setNewLike] = useState(false);
 
-  /* CALCUL JOUR POST */
+  /* Modal Comment */
+  const openCommentPopUp = () => {
+    setPopUpComment(true);
+  };
+  const closeCommentPopUp = () => {
+    setPopUpComment(false);
+  };
+
+  /* Calculate date post */
   const calculatePostAge = (createdAt: string) => {
     const postDate = new Date(createdAt);
     const now = new Date();
@@ -109,6 +120,7 @@ export const Post = ({ post, onUpdate }: PostProps) => {
     }
   };
 
+  /* Likes */
   const handleLike = () => {
     // Met à jour les données fictives pour simuler le "Like"
     const updatedPost = {
@@ -120,16 +132,10 @@ export const Post = ({ post, onUpdate }: PostProps) => {
     onUpdate(updatedPost);
   };
 
-  const handleComment = () => {
-    // Met à jour les données fictives pour simuler l'ajout de commentaire
-    const updatedPost = { ...post, comments: [...post.comments, newComment] };
-
-    setNewComment("");
-    onUpdate(updatedPost);
-  };
-
   return (
-    <article className="flex flex-col gap-15 border-b-1 pb-30 border-beigePrimary">
+    <article
+      className={`flex flex-col gap-15 border-b-1 pb-30 border-beigePrimary${className}`}
+    >
       <header className="flex items-center gap-8">
         <ProfilPicture
           size="32"
@@ -183,7 +189,12 @@ export const Post = ({ post, onUpdate }: PostProps) => {
             fill="brown"
             onClick={handleLike}
           />
-          <IconButton name="comment" size="small" fill="brown" />
+          <IconButton
+            name="comment"
+            size="small"
+            fill="brown"
+            onClick={openCommentPopUp}
+          />
         </div>
 
         <Typography
@@ -195,30 +206,29 @@ export const Post = ({ post, onUpdate }: PostProps) => {
           {post.likes} Likes
         </Typography>
         <Typography
-          component="span"
+          component="button"
           fontSize="13"
           fontFamily="FKGrotesk"
           textColor="beige"
+          onClick={openCommentPopUp}
         >
           Voir {post.comments.length} commentaires
         </Typography>
 
-        {/*         <div className="mt-2">
-          <input
-            type="text"
-            className="border rounded p-2 w-full"
-            placeholder="Ajouter un commentaire"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 focus:outline-none"
-            onClick={handleComment}
-          >
-            Commenter
-          </button>
-        </div> */}
       </footer>
+
+      {popUpComment && (
+        <CommentModal
+          className="comment-modal"
+          handleCloseModal={closeCommentPopUp}
+          comments={post.comments}
+          onAddComment={(comment) => {
+            // Cette fonction sera appelée depuis le modal pour ajouter un commentaire.
+            const updatedPost = { ...post, comments: [...post.comments, comment] };
+            onUpdate(updatedPost);
+          }}
+        />
+      )}
     </article>
   );
 };
