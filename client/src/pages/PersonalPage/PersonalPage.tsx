@@ -21,7 +21,7 @@ export default function PersonalPage() {
   };
 
   const closePopUpUser = () => {
-    setPopUpUser(true);
+    setPopUpUser(false);
     enableBodyScroll();  
   };
 
