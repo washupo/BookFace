@@ -1,11 +1,11 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
-import jsonwebtoken from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import routes from "./routes/userRoute";
+import postRoutes from "./routes/postRoute";
 import cors from "cors";
 
 import { connectToDB } from "./config/db";
-import { Request, Response, NextFunction } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 
@@ -28,17 +28,20 @@ app.use(cors());
 app.use(function (req: RequestWithUser, res: Response, next: NextFunction) {
   if (
     req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "JWT"
+    req.headers.authorization.startsWith("Bearer ")
   ) {
-    jsonwebtoken.verify(
-      req.headers.authorization.split(" ")[1],
-      "RESTFULAPIs",
-      function (err, decode) {
-        if (err) req.user = undefined;
+    const token = req.headers.authorization.split(" ")[1];
+    console.log("Token avant décodage :", token);
+
+    jwt.verify(token, "RESTFULAPIs", function (err, decode) {
+      if (err) {
+        console.log("Erreur lors du décodage du token :", err);
+        req.user = undefined;
+      } else {
         req.user = decode;
-        next();
       }
-    );
+      next();
+    });
   } else {
     req.user = undefined;
     next();
@@ -46,6 +49,7 @@ app.use(function (req: RequestWithUser, res: Response, next: NextFunction) {
 });
 
 routes(app);
+postRoutes(app);
 
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + " not found" });
