@@ -36,12 +36,12 @@ export const NavBar = ({ className }: NavBarProps) => {
   };
 
   const closeSearchPopUp = () => {
-    setPopUpSearch(true);
+    setPopUpSearch(false);
     enableBodyScroll();  
   };
 
   const closePostPopUp = () => {
-    setPopUpPost(true);
+    setPopUpPost(false);
     enableBodyScroll();  
   };
   
