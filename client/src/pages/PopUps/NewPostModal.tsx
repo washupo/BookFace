@@ -6,12 +6,12 @@ import maskImage from "../../assets/images/masque.svg";
 import axios from "axios";
 
 interface PostModalProps {
-  isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
+  handleCloseModal: () => void;
 }
 
-export const PostModal = ({ isOpen, setIsOpen, className }: PostModalProps) => {
+export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [caption, setCaption] = useState<string>("");
   const [croppedImage, setCroppedImage] = useState<string>(maskImage);
@@ -81,13 +81,12 @@ export const PostModal = ({ isOpen, setIsOpen, className }: PostModalProps) => {
 
   return (
     <Modal
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
       background="white"
       className={`${className}`}
       name="Poster"
       textColor="brown"
       fill="brown"
+      handleCloseModal={handleCloseModal}
     >
       <div className="w-full flex flex-col gap-30">
         <img src={croppedImage || maskImage} alt="Selected" className="mask" />

@@ -31,3 +31,12 @@
   -webkit-mask-size: auto 100%;
   mask-size: auto 100%;
 }
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal-open {
+  overflow-y: auto;
+  max-height: 100vh
+}

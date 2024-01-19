@@ -5,22 +5,20 @@ import profilPicture from '../../assets/images/profilPictureTest.png';
 
 
 interface UserModalProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
+  handleCloseModal: () => void;
 }
 
-export const UserModal = ({ isOpen, setIsOpen, className }: UserModalProps) => {
+export const UserModal = ({ className, handleCloseModal }: UserModalProps) => {
 
     return (
         <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen} 
             background='white'
-            className={`${className} left-0 overflow-y-scroll`}
+            className={`${className} left-0`}
             name="Compte utilisateur"
             textColor="brown"
             fill="brown"
+            handleCloseModal={handleCloseModal}
         >
             <div className="flex flex-col items-center justify-center gap-30 pt-30">
             <img className="rounded-full" alt="Profile picture" src={profilPicture} />

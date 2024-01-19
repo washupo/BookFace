@@ -1,24 +1,20 @@
 
 import { Modal } from "../../common/Modal";
-
 interface SearchModalProps {
-    isOpen: boolean;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     className?: string;
-
+    handleCloseModal: () => void;
 }
 
-export const SearchModal = ({ isOpen, setIsOpen, className }: SearchModalProps) => {
+export const SearchModal = ({ className, handleCloseModal }: SearchModalProps) => {
     
     return (
         <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen} 
             background='brown'
             className={`${className}`}
             name="Modal Title"
             textColor="white"
             fill="white"
+            handleCloseModal={handleCloseModal}
         >
                     <p>Ceci est un exemple de contenu de modal.</p>
 

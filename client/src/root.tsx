@@ -1,8 +1,10 @@
 import { Outlet } from 'react-router-dom'
 
-export default function Root() {
+export const CustomOutlet = () => {
+
+
   return (
-    <>
+    <> 
       <Outlet />
     </>
   )

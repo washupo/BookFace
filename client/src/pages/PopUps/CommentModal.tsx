@@ -1,28 +1,22 @@
-
 import { Modal } from "../../common/Modal";
 
 interface CommentModalProps {
-    isOpen: boolean;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     className?: string;
-
+    handleCloseModal: () => void;
 }
 
-export const CommentModal = ({ isOpen, setIsOpen, className }: CommentModalProps) => {
+export const CommentModal = ({ className,handleCloseModal }: CommentModalProps) => {
     
     return (
         <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen} 
             background='brown'
             className={`${className}`}
             name="Commentaires"
             textColor="white"
             fill="white"
+            handleCloseModal={handleCloseModal}
         >
                     <p>Ceci est un exemple de contenu de modal.</p>
-
-
         </Modal>
     )
 }

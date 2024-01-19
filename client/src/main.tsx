@@ -3,7 +3,7 @@ import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Root from './root'
+import { CustomOutlet } from './root'
 import ErrorPage from './pages/ErrorPage'
 
 import Landing from './pages/Landing/Landing'
@@ -15,7 +15,7 @@ import UserProfile from './pages/UserProfile/UserProfile'
 const router = createBrowserRouter([
   {
     path:"/",
-    element:<Root />,
+    element:<CustomOutlet />,
     errorElement: <ErrorPage />,
     children: [
       {

@@ -4,46 +4,39 @@ import { Typography } from "./Typography";
 import { IconProps } from "../components/Icon";
 
 interface ModalProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   children: React.ReactNode;
   background: "brown" | "white";
   textColor: "brown" | "white";
   className?: string;
   fill: IconProps["fill"];
+  handleCloseModal: () => void;
 }
 
 export const Modal = ({
-  isOpen,
-  setIsOpen,
   name,
   children,
   background,
   textColor,
   fill,
   className,
+  handleCloseModal,
 }: ModalProps) => {
-  if (!isOpen) {
-    document.body.style.overflow = "auto";
-    return null;
-  }
-
-  document.body.style.overflow = "hidden";
-
+  
   const backgroundClass =
     background === "brown" ? "bg-brownPrimary" : "bg-whitePrimary";
 
   const textColorClass =
     textColor === "brown" ? "text-brownPrimary" : "text-whitePrimary";
 
-  const handleCloseModal = () => {
-    setIsOpen(false);
-  };
+    // Utilisez la classe modal-open pour désactiver/activer le défilement
+  const modalClass = `modal-container ${backgroundClass} ${textColorClass} ${className} fixed top-0 py-30 px-20 z-50 min-h-screen w-screen ${
+    document.body.classList.contains("modal-open") ? "modal-open" : ""
+  }`;
 
   return (
     <div
-      className={`${backgroundClass} ${textColorClass} ${className} fixed top-0 py-30 px-20 z-50 min-h-screen w-screen`}
+      className={modalClass}
     >
       <hgroup className="flex justify-between pb-30">
         <Typography component="h2" fontFamily="FKGroteskBold" fontSize="20">
@@ -56,7 +49,7 @@ export const Modal = ({
           fill={fill}
         />
       </hgroup>
-      <div className="w-full flex flex-col gap-30 min-h-screen overflow-y-auto">
+      <div className="w-full flex flex-col gap-30 min-h-screen">
         {children}
       </div>
     </div>
