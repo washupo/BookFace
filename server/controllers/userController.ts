@@ -31,6 +31,8 @@ export const signup = async (req: Request, res: Response) => {
     // Create a profile for the newly registered user
     const newProfile = new Profile({
       userId: savedUser._id,
+      username: req.body.username, // Add this line
+      email: req.body.email, // Add this line
       // Add other profile fields as needed
     });
 
@@ -43,7 +45,6 @@ export const signup = async (req: Request, res: Response) => {
     res.status(400).json({ message: "Registration failed" });
   }
 };
-
 export const login = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ email: req.body.email });
