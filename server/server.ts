@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
 import routes from "./routes/userRoute";
 import postRoutes from "./routes/postRoute";
+import cors from "cors";
 
 import { connectToDB } from "./config/db";
 import { ParamsDictionary } from "express-serve-static-core";
@@ -21,6 +22,8 @@ connectToDB();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use(function (req: RequestWithUser, res: Response, next: NextFunction) {
   if (

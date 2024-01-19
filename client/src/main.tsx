@@ -3,19 +3,19 @@ import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Root from './root'
-import ErrorPage from './routes/ErrorPage'
+import { CustomOutlet } from './root'
+import ErrorPage from './pages/ErrorPage'
 
-import Landing from './routes/Landing/Landing'
-import LoginSignin from './routes/LoginSignin/LoginSignin'
-import HomePage from './routes/HomePage/HomePage'
-import PersonalPage from './routes/PersonalPage/PersonalPage'
-import UserProfile from './routes/UserProfile/UserProfile'
+import Landing from './pages/Landing/Landing'
+import LoginSignin from './pages/LoginSignin/LoginSignin'
+import HomePage from './pages/HomePage/HomePage'
+import PersonalPage from './pages/PersonalPage/PersonalPage'
+import UserProfile from './pages/UserProfile/UserProfile'
 
 const router = createBrowserRouter([
   {
     path:"/",
-    element:<Root />,
+    element:<CustomOutlet />,
     errorElement: <ErrorPage />,
     children: [
       {

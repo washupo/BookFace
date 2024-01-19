@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "FKGroteskBold";
+  src: url("./assets/fonts/fkgrotesk-bold-webfont.woff2") format("woff2"),
+    url("./assets/fonts/fkgrotesk-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FKGrotesk";
+  src: url("./assets/fonts/fkgrotesk-medium-webfont.woff2") format("woff2"),
+    url("./assets/fonts/fkgrotesk-medium-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.mask {
+  /* width: auto;
+  height: 100%; */
+  -webkit-mask-image: url(./assets/images/masque.svg);
+  mask-image: url(./assets/images/masque.svg);
+  -webkit-mask-position: top left;
+  mask-position: top left;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: auto 100%;
+  mask-size: auto 100%;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal-open {
+  overflow-y: auto;
+  max-height: 100vh
+}
