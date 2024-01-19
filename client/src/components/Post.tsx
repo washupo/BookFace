@@ -110,7 +110,7 @@ export const Post = ({ post, onUpdate }: PostProps) => {
   };
 
   const handleLike = () => {
-    // Mettez à jour les données fictives pour simuler le "Like"
+    // Met à jour les données fictives pour simuler le "Like"
     const updatedPost = {
       ...post,
       likes: newLike ? post.likes - 1 : post.likes + 1,
@@ -121,7 +121,7 @@ export const Post = ({ post, onUpdate }: PostProps) => {
   };
 
   const handleComment = () => {
-    // Mettez à jour les données fictives pour simuler l'ajout de commentaire
+    // Met à jour les données fictives pour simuler l'ajout de commentaire
     const updatedPost = { ...post, comments: [...post.comments, newComment] };
 
     setNewComment("");
@@ -129,47 +129,81 @@ export const Post = ({ post, onUpdate }: PostProps) => {
   };
 
   return (
-    <section className="flex flex-col gap-15">
-      {/* Ligne 1 */}
-      <header className="flex items-center">
+    <article className="flex flex-col gap-15 border-b-1 pb-30 border-beigePrimary">
+      <header className="flex items-center gap-8">
         <ProfilPicture
           size="32"
           url={post.profilePicture}
-          className="mr-2 rounded-full"
+          className="rounded-full"
         />
-
         <Typography
           component="h2"
           fontSize="15"
           fontFamily="FKGroteskBold"
           textColor="brown"
         >
-          {post.author}
+          {post.username}
         </Typography>
-
         <Typography
-          component="span"
+          component="p"
           fontSize="13"
-          fontFamily="FKGroteskBold"
+          fontFamily="FKGrotesk"
           textColor="beige"
-          className="ml-2"
         >
           {calculatePostAge(post.createdAt)}
         </Typography>
       </header>
-          <main>
-              <img src={post.postPicture} alt="post" className="w-full mask" />
+      <main className="flex flex-col gap-15">
+        <img src={post.postPicture} alt="post" className="w-full" />
+        <section className="flex gap-8">
+          <Typography
+            component="p"
+            fontSize="15"
+            fontFamily="FKGroteskBold"
+            textColor="brown"
+          >
+            {post.username}
+          </Typography>
+          <Typography
+            component="p"
+            fontSize="15"
+            fontFamily="FKGrotesk"
+            textColor="brown"
+            className=""
+          >
+            {post.captionPicture}
+          </Typography>
+        </section>
       </main>
-      <footer>
-        <p className="text-gray-600">{post.content}</p>
-        <p className="text-blue-500">{post.likes} Likes</p>
-        <button
-          className="text-blue-500 hover:underline focus:outline-none"
-          onClick={handleLike}
+      <footer className="">
+        <div className="flex gap-10 pb-15">
+          <IconButton
+            name="like"
+            size="small"
+            fill="brown"
+            onClick={handleLike}
+          />
+          <IconButton name="comment" size="small" fill="brown" />
+        </div>
+
+        <Typography
+          component="p"
+          fontSize="13"
+          fontFamily="FKGroteskBold"
+          textColor="brown"
         >
-          <IconButton name = "like" size = "small" fill= "brown" />
-        </button>
-        <div className="mt-2">
+          {post.likes} Likes
+        </Typography>
+        <Typography
+          component="span"
+          fontSize="13"
+          fontFamily="FKGrotesk"
+          textColor="beige"
+        >
+          Voir {post.comments.length} commentaires
+        </Typography>
+
+        {/*         <div className="mt-2">
           <input
             type="text"
             className="border rounded p-2 w-full"
@@ -183,8 +217,8 @@ export const Post = ({ post, onUpdate }: PostProps) => {
           >
             Commenter
           </button>
-        </div>
+        </div> */}
       </footer>
-    </section>
+    </article>
   );
 };
