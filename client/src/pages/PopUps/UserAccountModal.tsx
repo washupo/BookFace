@@ -14,7 +14,7 @@ export const UserModal = ({ className, handleCloseModal }: UserModalProps) => {
     return (
         <Modal
             background='white'
-            className={`${className} left-0 overflow-y-scroll`}
+            className={`${className} left-0`}
             name="Compte utilisateur"
             textColor="brown"
             fill="brown"
