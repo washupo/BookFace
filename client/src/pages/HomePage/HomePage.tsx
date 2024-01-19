@@ -1,6 +1,6 @@
 import { Typography } from "../../common/Typography";
 import { Icon } from "../../components/Icon";
-import { Logo } from "../../components/Logo";
+import { Logo } from "../../components/logo";
 import { Layout } from "../../components/layout/Layout";
 import { NavBar } from "../../components/layout/NavBar";
 
