@@ -30,7 +30,7 @@ export const Modal = ({
     textColor === "brown" ? "text-brownPrimary" : "text-whitePrimary";
 
     // Utilisez la classe modal-open pour désactiver/activer le défilement
-  const modalClass = `modal-container ${backgroundClass} ${textColorClass} ${className} fixed top-0 py-30 px-20 z-50 min-h-screen w-screen ${
+  const modalClass = `modal-container ${backgroundClass} ${textColorClass} ${className} fixed top-0 left-0 py-30 px-20 z-50 min-h-screen w-screen ${
     document.body.classList.contains("modal-open") ? "modal-open" : ""
   }`;
 

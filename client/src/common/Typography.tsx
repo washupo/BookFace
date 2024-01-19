@@ -1,5 +1,5 @@
 interface TypographyProps {
-  component: "h1" | "h2" | "h3" | "p" | "span" | "label";
+  component: "h1" | "h2" | "h3" | "p" | "span" | "label" | "button";
   fontFamily?: "FKGrotesk" | "FKGroteskBold";
   fontSize: "20" | "15" | "13";
   textColor?: "brown" | "beige" | "white";
@@ -8,6 +8,7 @@ interface TypographyProps {
   uppercase?: boolean;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 export const Typography = ({
@@ -20,6 +21,7 @@ export const Typography = ({
   uppercase = false,
   children,
   className,
+  onClick,
 }: TypographyProps) => {
   let fontSizeClass = "";
   let textColorClass = "";
@@ -68,7 +70,7 @@ export const Typography = ({
 
   return (
     <Component
-      className={`${fontSizeClass} ${textColorClass} ${hoverTextColorClass} ${fontFamilyClass} ${underlineClass} ${uppercaseClass} ${className}`}
+      className={`${fontSizeClass} ${textColorClass} ${hoverTextColorClass} ${fontFamilyClass} ${underlineClass} ${uppercaseClass} ${className}`}onClick={onClick}
     >
       {children}
     </Component>
