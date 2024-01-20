@@ -9,12 +9,11 @@ import { api } from "../../API/api";
 import { jwtDecode } from "jwt-decode";
 
 interface PostModalProps {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
   handleCloseModal: () => void;
 }
 
-export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalProps) => {
+export const PostModal = ({ className, handleCloseModal }: PostModalProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [croppedImage, setCroppedImage] = useState<string>(maskImage);
   const [credentials, setCredentials] = useState({
@@ -61,7 +60,10 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
       console.log("Post créé avec succès :", response.data);
 
       // Fermer modale
-      setIsOpen(false);
+      handleCloseModal();
+
+      // Alerte succès
+      alert("Post créé avec succès !");
     } catch (error) {
       // Gérer erreur
       if (axios.isAxiosError(error)) {
