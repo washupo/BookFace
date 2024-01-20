@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Modal } from "../../common/Modal";
+import { Modal } from "../../common/modal";
 import { Button } from "../../common/button";
 import { IconButton } from "../../common/IconButton";
 import maskImage from "../../assets/images/masque.svg";
 import axios from "axios";
+import { api, getTokenPayload } from "../../API/api";
 
 interface PostModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -65,8 +66,16 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
     formData.append("caption", caption);
 
     try {
+      // Get the user's ID from the token payload
+    const userId = getTokenPayload()?.id;
+
+    if (userId) {
+      // Add the user's ID to the headers
+      api.defaults.headers.common["X-User-Id"] = userId;
+    }
+
       // Envoyer requête POST
-      const response = await axios.post("/api/posts", formData);
+      const response = await axios.post("http://localhost:8000/posts", formData);
 
       // Gérer réponse
       console.log("Post créé avec succès :", response.data);
@@ -76,8 +85,11 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
     } catch (error) {
       // Gérer erreur
       console.error("Error creating post:", error);
-    }
-  };
+    } finally {
+      // Clear the user's ID from the headers to avoid affecting other requests
+      delete api.defaults.headers.common["X-User-Id"];
+  }
+}
 
   return (
     <Modal
