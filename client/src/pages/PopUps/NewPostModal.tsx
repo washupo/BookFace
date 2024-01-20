@@ -37,14 +37,14 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
     e.preventDefault();
 
     try {
-       
+
       // Créer un objet FormData pour envoyer le fichier image et le texte de la légende
       const formData = new FormData();
       formData.append("image", selectedImage as File);
       formData.append("caption", credentials.caption);
       const decodedToken: any = jwtDecode(localStorage.getItem("token") as string);
       formData.append("user", decodedToken._id);
-      
+
       // Envoyer requête POST
       const response = await axios.post(
         "http://localhost:8000/posts",
@@ -84,16 +84,10 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
     }
   };
 
-  const handleInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.type === "file") {
-      handleImageUpload(e);
-    } else {
-      handleChange(e);
-    }
-  };
-
   // Ouvrir sélecteur de fichier
-  const openFileInput = () => {
+  const openFileInput = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); 
+  
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -145,8 +139,7 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
 
               ref={fileInputRef}
               className="hidden"
-              onChange={handleInputChanged}
-            // onChange={handleImageUpload}
+              onChange={handleImageUpload}
             />
             <IconButton
               name="post"
