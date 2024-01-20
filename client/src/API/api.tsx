@@ -10,7 +10,7 @@ interface TokenPayload {
     // Add other fields as needed
 }
 
-const getTokenPayload = (): TokenPayload | null => {
+export const getTokenPayload = (): TokenPayload | null => {
     const token = localStorage.getItem("token");
     if (token) {
         try {
