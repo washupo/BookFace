@@ -26,22 +26,21 @@ export const getTokenPayload = (): TokenPayload | null => {
 
 //Add a request interceptor
 api.interceptors.request.use(
-     (config) => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            config.headers = config.headers || {}; // Ensure headers is defined
-            config.headers.Authorization = `Bearer ${token}`;
-            const tokenPayload = getTokenPayload();
-            if (tokenPayload) {
-                // You can now use tokenPayload.id, tokenPayload.username, etc.
-                config.headers["X-User-Id"] = tokenPayload.id;
-                config.headers["X-Username"] = tokenPayload.username;
-                // Add other headers for additional fields as needed
-            }
-        }
-        return config
-    },
-     (error) =>Promise.reject(error)
+    (config) => {
+       const token = localStorage.getItem("token");
+       if (token) {
+           config.headers.Authorization = `Bearer ${token}`;
+           const tokenPayload = getTokenPayload();
+           if (tokenPayload) {
+               // You can now use tokenPayload.id, tokenPayload.username, etc.
+               config.headers["X-User-Id"] = tokenPayload.id;
+        //        config.headers["X-Username"] = tokenPayload.username;
+        //        // Add other headers for additional fields as needed
+           }
+       }
+       return config
+   },
+    (error) =>Promise.reject(error)
 );
 
 //Add a response interceptor
@@ -67,3 +66,5 @@ api.interceptors.response.use(
         return Promise.reject(error);
     }
 )
+
+

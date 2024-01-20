@@ -63,13 +63,6 @@ export const createPost = async (req: Request, res: Response) => {
 
     res.status(201).json(savedPost);
     console.log('File available at', imageUrl);
-    return res.send({
-      message: 'File uploaded successfully',
-      name: image.originalname,
-      type: image.mimetype,
-      downloadUrl: imageUrl,
-    })
-
   } catch (error) {
   console.error(error);
   res.status(500).json({ message: "Internal server error" });
