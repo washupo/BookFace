@@ -4,6 +4,7 @@ import { Button } from "../../common/button";
 import { IconButton } from "../../common/IconButton";
 import maskImage from "../../assets/images/masque.svg";
 import axios from "axios";
+import { Input } from "../../components/form/Input";
 import { api, getTokenPayload } from "../../API/api";
 
 interface PostModalProps {
@@ -14,10 +15,61 @@ interface PostModalProps {
 
 export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [caption, setCaption] = useState<string>("");
   const [croppedImage, setCroppedImage] = useState<string>(maskImage);
+  const [credentials, setCredentials] = useState({
+    image: "",
+    caption: "",
+    userId: "",
+  });
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  /* Connexion Backend */
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      // Get the user's ID from the token payload
+      const userId = getTokenPayload()?.id;
+
+      if (userId) {
+        // Add the user's ID to the headers
+        api.defaults.headers.common["X-User-Id"] = userId;
+      }
+
+      // Créer un objet FormData pour envoyer le fichier image et le texte de la légende
+      const formData = new FormData();
+      formData.append("image", selectedImage as File);
+      formData.append("caption", credentials.caption);
+      formData.append("userId", userId || "");
+
+      // Envoyer requête POST
+      const response = await axios.post("http://localhost:8000/posts", formData);
+
+      // Gérer réponse
+      console.log("Post créé avec succès :", response.data);
+
+      // Fermer modale
+      setIsOpen(false);
+    } catch (error) {
+      // Gérer erreur
+      if (axios.isAxiosError(error)) {
+        console.error('Échec de l\'authentification :', error.response?.data?.message);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
+    } finally {
+      // Clear the user's ID from the headers to avoid affecting other requests
+      delete api.defaults.headers.common["X-User-Id"];
+    }
+  }
 
   /* Gestion du chargement de l'image sélectionnée */
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +77,14 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
     if (file) {
       setSelectedImage(file);
       setCroppedImage(""); // Reset cropped image
+    }
+  };
+
+  const handleInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.type === "file") {
+      handleImageUpload(e);
+    } else {
+      handleChange(e);
     }
   };
 
@@ -59,90 +119,60 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
     }
   }, [selectedImage]);
 
-  /* Connexion Backend */
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("image", selectedImage as File);
-    formData.append("caption", caption);
 
-    try {
-      // Get the user's ID from the token payload
-    const userId = getTokenPayload()?.id;
-
-    if (userId) {
-      // Add the user's ID to the headers
-      api.defaults.headers.common["X-User-Id"] = userId;
-    }
-
-      // Envoyer requête POST
-      const response = await axios.post("http://localhost:8000/posts", formData);
-
-      // Gérer réponse
-      console.log("Post créé avec succès :", response.data);
-
-      // Fermer modale
-      setIsOpen(false);
-    } catch (error) {
-      // Gérer erreur
-      console.error("Error creating post:", error);
-    } finally {
-      // Clear the user's ID from the headers to avoid affecting other requests
-      delete api.defaults.headers.common["X-User-Id"];
-  }
-}
 
   return (
     <Modal
-    background="white"
-    className={`${className}`}
-    name="Poster"
-    textColor="brown"
-    fill="brown"
-    handleCloseModal={handleCloseModal}
-  >
+      background="white"
+      className={`${className}`}
+      name="Poster"
+      textColor="brown"
+      fill="brown"
+      handleCloseModal={handleCloseModal}
+    >
 
-    <form action="post" onSubmit={handleSubmit} className="w-full flex flex-col gap-30">
-      <div className="w-full flex flex-col gap-30">
-        <img src={croppedImage || maskImage} alt="Selected" className="mask" />
-        <label>
-          <input
-            type="file"
-            accept="image/*"
+      <form action="post" onSubmit={handleSubmit} className="w-full flex flex-col gap-30">
+        <div className="w-full flex flex-col gap-30">
+          <img src={croppedImage || maskImage} alt="Selected" className="mask" />
+          <label>
+            <input
+              type="file"
+              accept="image/*"
 
-            ref={fileInputRef}
-            className="hidden"
-            onChange={handleInputChanged}
-          // onChange={handleImageUpload}
-          />
-          <IconButton
-            name="post"
-            size="large"
-            fill="brown"
-            onClick={openFileInput}
-          />
-        </label>
-      </div>
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleInputChanged}
+            // onChange={handleImageUpload}
+            />
+            <IconButton
+              name="post"
+              size="large"
+              fill="brown"
+              onClick={openFileInput}
+            />
+          </label>
+        </div>
 
-      <Input
-        as="textarea"
-        label=""
-        placeholder="Ajouter une légende..."
-        type="text"
-        name="caption"
-        value={credentials.caption}
-        color="brown"
-        border="all"
-        onChange={handleChange}
-      // onChange={(e) => setCaption(e.target.value)}
+        <Input
+          as="textarea"
+          label=""
+          placeholder="Ajouter une légende..."
+          type="text"
+          name="caption"
+          value={credentials.caption}
+          color="brown"
+          border="all"
+          onChange={handleChange}
+        // onChange={(e) => setCaption(e.target.value)}
 
-      />
-      <Button
-        type="submit"
-        background="brown"
-        name="Poster"
-      // onClick={createPost}
-      />
-    </form>
-  </Modal>
+        />
+        <Button
+          type="submit"
+          background="brown"
+          name="Poster"
+        // onClick={createPost}
+        />
+      </form>
+    </Modal>
   );
 };
