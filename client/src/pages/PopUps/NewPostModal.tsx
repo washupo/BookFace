@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import { Modal } from "../../common/modal";
 import { Button } from "../../common/button";
 import { IconButton } from "../../common/IconButton";
 import maskImage from "../../assets/images/masque.svg";
-import axios from "axios";
 import { Input } from "../../components/form/Input";
-import { api, getTokenPayload } from "../../API/api";
+import { api } from "../../API/api";
+import { jwtDecode } from "jwt-decode";
 
 interface PostModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,22 +37,25 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
     e.preventDefault();
 
     try {
-      // Get the user's ID from the token payload
-      const userId = getTokenPayload()?.id;
-
-      if (userId) {
-        // Add the user's ID to the headers
-        api.defaults.headers.common["X-User-Id"] = userId;
-      }
-
+       
       // Créer un objet FormData pour envoyer le fichier image et le texte de la légende
       const formData = new FormData();
       formData.append("image", selectedImage as File);
       formData.append("caption", credentials.caption);
-      formData.append("userId", userId || "");
-
+      const decodedToken: any = jwtDecode(localStorage.getItem("token") as string);
+      formData.append("user", decodedToken._id);
+      
       // Envoyer requête POST
-      const response = await axios.post("http://localhost:8000/posts", formData);
+      const response = await axios.post(
+        "http://localhost:8000/posts",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          }
+        }
+      );
 
       // Gérer réponse
       console.log("Post créé avec succès :", response.data);
