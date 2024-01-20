@@ -60,7 +60,7 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
   }, [selectedImage]);
 
   /* Connexion Backend */
-  const createPost = async () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("image", selectedImage as File);
     formData.append("caption", caption);
@@ -93,22 +93,26 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
 
   return (
     <Modal
-      background="white"
-      className={`${className}`}
-      name="Poster"
-      textColor="brown"
-      fill="brown"
-      handleCloseModal={handleCloseModal}
-    >
+    background="white"
+    className={`${className}`}
+    name="Poster"
+    textColor="brown"
+    fill="brown"
+    handleCloseModal={handleCloseModal}
+  >
+
+    <form action="post" onSubmit={handleSubmit} className="w-full flex flex-col gap-30">
       <div className="w-full flex flex-col gap-30">
         <img src={croppedImage || maskImage} alt="Selected" className="mask" />
         <label>
           <input
             type="file"
             accept="image/*"
-            onChange={handleImageUpload}
+
             ref={fileInputRef}
             className="hidden"
+            onChange={handleInputChanged}
+          // onChange={handleImageUpload}
           />
           <IconButton
             name="post"
@@ -119,19 +123,26 @@ export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalP
         </label>
       </div>
 
-      <textarea
+      <Input
+        as="textarea"
+        label=""
         placeholder="Ajouter une légende..."
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        className="w-full h-40 bg-whitePrimary border-2 rounded-5 p-20 border-brownPrimary focus:outline-none"
-        rows={3}
+        type="text"
+        name="caption"
+        value={credentials.caption}
+        color="brown"
+        border="all"
+        onChange={handleChange}
+      // onChange={(e) => setCaption(e.target.value)}
+
       />
       <Button
         type="submit"
         background="brown"
         name="Poster"
-        onClick={createPost}
+      // onClick={createPost}
       />
-    </Modal>
+    </form>
+  </Modal>
   );
 };
