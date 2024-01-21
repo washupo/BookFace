@@ -1,16 +1,33 @@
+import { useState, useEffect } from "react";
 import { Input } from "../../components/form/Input";
 import { Form } from "../../components/form/Form";
 import { Button } from "../../common/button";
-// import { api } from "../../API/api";
+import { api } from "../../API/api";
+import axios from "axios";
+
 
 
 interface UserAccountFormProps {
-  onSubmit: () => void;
+  onSubmit?: () => void;
+}
+
+interface ProfilDataProps {
+  _id: string;
+  avatar: {
+    url: string;
+  }
+  bio: string;
+  username: string;
+  email: string;
+  birthdate: string;
+  species: string;
+  gender: string;
+  password: string;
 }
 
 export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element => {
 
-   // const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
   // useEffect(() => {
   //   const fetchUser = async () => {
@@ -27,14 +44,53 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
   // if (!user) {
   //   return <div>Loading...</div>; }
 
+  const [profileDatas, setProfileDatas] = useState<ProfilDataProps[]>([]);
+
+  useEffect(() => {
+    // Récupérer les données du profil
+    const getProfileDatas = async () => {
+
+      try {
+        // Envoyer requête GET
+        const response = await api.get(
+          "http://localhost:8000/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        // Handle the case where the response is a string
+        if (typeof response.data === 'string') {
+          console.log('Unexpected response format:', response.data);
+          return;
+        }
+
+        // Mettre à jour les données du profil
+        setProfileDatas(Array.isArray(response.data) ? response.data : [response.data]);
+        console.log("Profile :", response.data);
+      } catch (error) {
+        // Gérer erreur
+        if (axios.isAxiosError(error)) {
+          console.error('Échec de l\'authentification :', error.response?.data?.message);
+        } else {
+          console.error('An unexpected error occurred:', error);
+        }
+      }
+    };
+
+    getProfileDatas();
+  }, []);
+
   return (
-    <Form onSubmit={onSubmit}>
-      <div className="w-full flex flex-col gap-25">
-        {" "}
+    <Form onSubmit={onSubmit  || (() => {})}>
+      {profileDatas.map((profileData) => (
+      <div className="w-full flex flex-col gap-25">       
         <Input
           as="textarea"
-          label="Nom d'utilisateur"
-          placeholder="Nom d'utilisateur"
+          label="Bio"
+          placeholder="Ajoutez une petite description"
           type="text"
           name="username"
           value=""
@@ -46,7 +102,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
         <Input
           as="input"
           label="Nom d'utilisateur"
-          placeholder="Nom d'utilisateur"
+          placeholder={profileData.username}
           type="text"
           name="username"
           value=""
@@ -57,7 +113,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
         <Input
           as="input"
           label="Espèce"
-          placeholder="Chien, chat, etc..."
+          placeholder={profileData.species}
           type="text"
           name="species"
           value=""
@@ -69,7 +125,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           <Input
             as="input"
             label="Genre"
-            placeholder="X"
+            placeholder={profileData.gender}
             type="text"
             name="species"
             value=""
@@ -82,7 +138,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           <Input
             as="input"
             label="Date de naissance"
-            placeholder="DD/MM/YYYY"
+            placeholder={profileData.birthdate}
             type="text"
             name="species"
             value=""
@@ -95,7 +151,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
         <Input
           as="input"
           label="Adresse email"
-          placeholder="johndoe@example.com"
+          placeholder={profileData.email}
           type="text"
           name="species"
           value=""
@@ -125,7 +181,9 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           border="bottom"
           onChange={() => { }}
         />
+        
       </div>
+      ))}
       <Button type="submit" background="brown" name="Connexion" />
     </Form>
   );
