@@ -127,12 +127,28 @@ export const getProfile = async (req: RequestWithUser, res: Response) => {
 
     // Check if a profile already exists for the user
     const existingProfile = await Profile.findOne({ userId });
+    const existingUser = await User.findById(userId);
 
-    if (!existingProfile) {
+    if (!existingProfile || !existingUser) {
       return res.status(404).json({ message: "Profile not found" });
     }
 
-    return res.json(existingProfile);
+    const combinedInfo = {
+      _id: existingProfile._id,
+      userId: existingProfile.userId,
+      bio: existingProfile.bio,
+      avatar: existingProfile.avatar,
+      email: existingProfile.email,
+      username: existingUser.fullName,
+      fullName: existingUser.fullName,
+      species: existingUser.species,
+      gender: existingUser.gender,
+      birthdate: existingUser.birthdate,
+      password: existingUser.hash_password,
+      // Ajoutez d'autres propriétés selon les besoins
+    };
+
+    return res.json(combinedInfo);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
