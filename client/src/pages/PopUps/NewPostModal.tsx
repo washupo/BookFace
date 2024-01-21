@@ -3,6 +3,9 @@ import { Modal } from "../../common/Modal";
 import { Button } from "../../common/Button";
 import { IconButton } from "../../common/IconButton";
 import maskImage from "../../assets/images/masque.svg";
+import { Input } from "../../components/form/Input";
+import { api } from "../../API/api";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 interface PostModalProps {
@@ -12,15 +15,69 @@ interface PostModalProps {
 }
 
 export const PostModal = ({
-  setIsOpen,
   className,
   handleCloseModal,
 }: PostModalProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [caption, setCaption] = useState<string>("");
   const [croppedImage, setCroppedImage] = useState<string>(maskImage);
+  const [credentials, setCredentials] = useState({
+    image: "",
+    caption: "",
+    userId: "",
+  });
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  /* Connexion Backend */
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append("image", selectedImage as File);
+      formData.append("caption", credentials.caption);
+      const decodedToken: any = jwtDecode(localStorage.getItem("token") as string);
+      formData.append("user", decodedToken._id);
+
+      // Envoyer requête POST
+      const response = await axios.post(
+        "/api/posts",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          }
+        }
+      );
+
+      // Gérer réponse
+      console.log("Post créé avec succès :", response.data);
+
+      // Fermer modale
+      handleCloseModal();
+
+      // Alerte succès
+      alert("Post créé avec succès !");
+    } catch (error) {
+      // Gérer erreur
+      if (axios.isAxiosError(error)) {
+        console.error('Échec de l\'authentification :', error.response?.data?.message);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
+    } finally {
+      // Clear the user's ID from the headers to avoid affecting other requests
+      delete api.defaults.headers.common["X-User-Id"];
+    }
+  };
 
   /* Gestion du chargement de l'image sélectionnée */
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +89,9 @@ export const PostModal = ({
   };
 
   // Ouvrir sélecteur de fichier
-  const openFileInput = () => {
+  const openFileInput = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -62,27 +121,6 @@ export const PostModal = ({
     }
   }, [selectedImage]);
 
-  /* Connexion Backend */
-  const createPost = async () => {
-    const formData = new FormData();
-    formData.append("image", selectedImage as File);
-    formData.append("caption", caption);
-
-    try {
-      // Envoyer requête POST
-      const response = await axios.post("/api/posts", formData);
-
-      // Gérer réponse
-      console.log("Post créé avec succès :", response.data);
-
-      // Fermer modale
-      setIsOpen(false);
-    } catch (error) {
-      // Gérer erreur
-      console.error("Error creating post:", error);
-    }
-  };
-
   return (
     <Modal
       background="white"
@@ -92,38 +130,46 @@ export const PostModal = ({
       fill="brown"
       handleCloseModal={handleCloseModal}
     >
-      <div className="w-full flex flex-col gap-30">
-        <img src={croppedImage || maskImage} alt="Selected" className="mask" />
-        <label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            ref={fileInputRef}
-            className="hidden"
-          />
-          <IconButton
-            name="post"
-            size="large"
-            fill="brown"
-            onClick={openFileInput}
-          />
-        </label>
-      </div>
 
-      <textarea
-        placeholder="Ajouter une légende..."
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        className="w-full h-40 bg-whitePrimary border-2 rounded-5 p-20 border-brownPrimary focus:outline-none"
-        rows={3}
-      />
-      <Button
-        type="submit"
-        background="brown"
-        name="Poster"
-        onClick={createPost}
-      />
+      <form action="post" onSubmit={handleSubmit} className="w-full flex flex-col gap-30">
+        <div className="w-full flex flex-col gap-30">
+          <img src={croppedImage || maskImage} alt="Selected" className="mask" />
+          <label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              ref={fileInputRef}
+              className="hidden"
+            />
+            <IconButton
+              name="post"
+              size="large"
+              fill="brown"
+              onClick={openFileInput}
+            />
+          </label>
+        </div>
+
+        <Input
+          as="textarea"
+          label=""
+          placeholder="Ajouter une légende..."
+          type="text"
+          name="caption"
+          value={credentials.caption}
+          color="brown"
+          border="all"
+          onChange={handleChange}
+        />
+
+        <Button
+          type="submit"
+          background="brown"
+          name="Poster"
+        />
+      </form>
+
     </Modal>
   );
 };
