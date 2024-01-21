@@ -8,6 +8,7 @@ import { disableBodyScroll, enableBodyScroll } from "../../bodyscroll";
 
 import axios from "axios";
 import { api } from "../../API/api";
+import { UserModal } from "../PopUps/UserAccountModal";
 
 interface ProfilDataProps {
   _id: string;
@@ -100,12 +101,6 @@ export default function PersonalPage() {
     getPosts();
   }, []);
 
-  const onClick = () => {
-    setPostPopUp(true);
-    disableBodyScroll({ savePosition: true });
-    console.log("click")
-  }
-
   return (
     <>
       <Layout
@@ -165,7 +160,7 @@ export default function PersonalPage() {
               {posts
               .filter((post) => post.user === 30)
               .map((post) => (
-                <div key={post.id}  onClick={onClick}>
+                <div key={post.id}>
                   <img className="w-full h-full object-cover" alt="Profile picture" src={post.url} />
                 </div>  
               ))}
@@ -176,7 +171,7 @@ export default function PersonalPage() {
 
       </Layout>
       <NavBar />
-      {popUpUser && <Post handleCloseModal={closePopUpUser} />}
+      {popUpUser && <UserModal handleCloseModal={closePopUpUser} />}
     </>
   )
 } 
