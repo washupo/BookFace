@@ -8,7 +8,7 @@ import { SearchModal } from "../../pages/PopUps/SearchModal";
 import { PostModal } from "../../pages/PopUps/NewPostModal";
 import { NotifModal } from "../../pages/PopUps/NotificationModal";
 /* Fix Scroll modal */
-import { disableBodyScroll, enableBodyScroll } from "../../BodyScroll";
+import { disableBodyScroll, enableBodyScroll } from "../../bodyscroll";
 
 type NavBarProps = {
   className?: string;

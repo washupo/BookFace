@@ -1,7 +1,7 @@
 import { Icon, IconProps } from "../components/Icon";
 
 interface IconButtonProps {
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   name: string;
   size: IconProps['size'];
   fill: IconProps['fill'];

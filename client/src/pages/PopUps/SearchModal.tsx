@@ -1,5 +1,5 @@
 
-import { Modal } from "../../common/Modal";
+import { Modal } from "../../common/modal";
 interface SearchModalProps {
     className?: string;
     handleCloseModal: () => void;
