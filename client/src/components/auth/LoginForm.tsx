@@ -1,23 +1,25 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { Input } from "../form/Input";
 import { Form } from "../form/Form";
-import { Button } from "../../common/button";
+import { Button } from "../../common/Button";
 
 export const LoginForm = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
-  })
+  });
 
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setCredentials({
       ...credentials,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -25,7 +27,8 @@ export const LoginForm = (): JSX.Element => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/auth/login",
+      const response = await axios.post(
+        "http://localhost:8000/auth/login",
         credentials
       );
 
@@ -40,24 +43,24 @@ export const LoginForm = (): JSX.Element => {
       const { token } = response.data;
 
       //Stockage de la valeur du token dans le localStorage(dans le stockage local du navigateur)
-      localStorage.setItem("token", token); 
-      
-      // Stockage du refreshToken dans le localStorage pour obtenir de nouveaux jetons d'accès lorsque le jeton d'accès actuel expire. 
+      localStorage.setItem("token", token);
+
+      // Stockage du refreshToken dans le localStorage pour obtenir de nouveaux jetons d'accès lorsque le jeton d'accès actuel expire.
       // localStorage.setItem("refreshToken", refreshToken);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Échec de l\'authentification :', error.response?.data?.message);
+        console.error(
+          "Échec de l'authentification :",
+          error.response?.data?.message
+        );
       } else {
-        console.error('An unexpected error occurred:', error);
+        console.error("An unexpected error occurred:", error);
       }
-
-
     }
   };
 
   return (
     <>
-
       <Form onSubmit={handleSubmit}>
         <div className="w-full flex flex-col gap-25">
           <Input

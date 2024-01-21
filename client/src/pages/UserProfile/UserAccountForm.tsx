@@ -1,16 +1,16 @@
 import { Input } from "../../components/form/Input";
 import { Form } from "../../components/form/Form";
-import { Button } from "../../common/button";
+import { Button } from "../../common/Button";
 // import { api } from "../../API/api";
-
 
 interface UserAccountFormProps {
   onSubmit: () => void;
 }
 
-export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element => {
-
-   // const [user, setUser] = useState(null);
+export const UserAccountForm = ({
+  onSubmit,
+}: UserAccountFormProps): JSX.Element => {
+  // const [user, setUser] = useState(null);
 
   // useEffect(() => {
   //   const fetchUser = async () => {
@@ -41,7 +41,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           color="brown"
           border="all"
           gap={true}
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <Input
           as="input"
@@ -52,7 +52,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           value=""
           color="brown"
           border="bottom"
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <Input
           as="input"
@@ -63,7 +63,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           value=""
           color="brown"
           border="bottom"
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <div className="flex gap-x-25">
           <Input
@@ -76,7 +76,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
             color="brown"
             border="bottom"
             className="w-1/4"
-            onChange={() => { }}
+            onChange={() => {}}
           />
 
           <Input
@@ -89,7 +89,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
             color="brown"
             border="bottom"
             className="w-3/4 "
-            onChange={() => { }}
+            onChange={() => {}}
           />
         </div>
         <Input
@@ -101,7 +101,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           value=""
           color="brown"
           border="bottom"
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <Input
           as="input"
@@ -112,7 +112,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           value=""
           color="brown"
           border="bottom"
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <Input
           as="input"
@@ -123,7 +123,7 @@ export const UserAccountForm = ({ onSubmit }: UserAccountFormProps): JSX.Element
           value=""
           color="brown"
           border="bottom"
-          onChange={() => { }}
+          onChange={() => {}}
         />
       </div>
       <Button type="submit" background="brown" name="Connexion" />

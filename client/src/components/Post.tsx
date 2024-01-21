@@ -86,7 +86,7 @@ interface PostProps {
 
 export const Post = ({ post, onUpdate, className }: PostProps) => {
   const [popUpComment, setPopUpComment] = useState(false);
-  const [newLike, setNewLike] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   /* Modal Comment */
   const openCommentPopUp = () => {
@@ -125,10 +125,10 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
     // Met à jour les données fictives pour simuler le "Like"
     const updatedPost = {
       ...post,
-      likes: newLike ? post.likes - 1 : post.likes + 1,
+      likes: isLiked ? post.likes - 1 : post.likes + 1,
     };
 
-    setNewLike(!newLike);
+    setIsLiked(!isLiked); // Basculer entre "like" et "liked"
     onUpdate(updatedPost);
   };
 
@@ -184,7 +184,7 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
       <footer className="">
         <div className="flex gap-10 pb-15">
           <IconButton
-            name="like"
+            name={isLiked ? "liked" : "like"} // Change le nom en fonction de l'état "like" ou "liked"
             size="small"
             fill="brown"
             onClick={handleLike}
@@ -214,7 +214,6 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
         >
           Voir {post.comments.length} commentaires
         </Typography>
-
       </footer>
 
       {popUpComment && (
@@ -224,11 +223,21 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
           comments={post.comments}
           onAddComment={(comment) => {
             // Cette fonction sera appelée depuis le modal pour ajouter un commentaire.
-            const updatedPost = { ...post, comments: [...post.comments, comment] };
+            const updatedPost = {
+              ...post,
+              comments: [...post.comments, comment],
+            };
             onUpdate(updatedPost);
           }}
         />
       )}
+      {/* Afficher le premier commentaire s'il existe */}
+      {/* {post.comments.length > 0 && (
+        <div className="border p-4 my-4">
+          <p className="text-lg font-semibold">{post.comments[0].username}</p>
+          <p className="text-gray-600">{post.comments[0].text}</p>
+        </div>
+      )} */}
     </article>
   );
 };

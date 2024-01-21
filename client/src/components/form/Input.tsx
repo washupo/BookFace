@@ -48,7 +48,7 @@ export const Input = ({
   const requiredClass = required ? "required" : "";
 
   const colorClass =
-    color === "white" ? "text-whitePrimary placeholder:text-whitePrimary border-whitePrimary"
+    color === "white" ? "text-whitePrimary placeholder:text-whitePrimary border-whitePrimary "
       : color === "brown" ? "text-brownPrimary placeholder:text-brownPrimary border-brownPrimary"
         : "";
 

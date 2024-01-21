@@ -1,12 +1,15 @@
 // CommentModal.tsx
-import { Modal } from "../../common/modal";
+import { IconButton } from "../../common/IconButton";
+import { Modal } from "../../common/Modal";
 import { Typography } from "../../common/Typography";
+import { Form } from "../../components/form/Form";
 import { useState } from "react";
+import { InputRounded } from "../../components/form/InputRounded";
 
 interface CommentModalProps {
   className?: string;
   handleCloseModal: () => void;
-  comments: string[];
+  comments: { text: string; username: string }[]; // Mettez à jour le type des commentaires
   onAddComment: (comment: string) => void;
 }
 
@@ -28,41 +31,50 @@ export const CommentModal = ({
   return (
     <Modal
       background="brown"
-      className={`${className}`}
+      className={`${className}h-screen`}
       name="Commentaires"
       textColor="white"
       fill="white"
       handleCloseModal={handleCloseModal}
     >
-      <div className="comments-container">
+      <div className="flex flex-col gap-15">
         {comments.map((comment, index) => (
-          <div key={index} className="comment-item">
+          <div key={index} className="">
             <Typography
               component="p"
               fontSize="15"
               textColor="white"
               fontFamily="FKGrotesk"
             >
-              {comment}
+              <span className="FKGroteskBold pr-[10px]">
+                {comment.username}
+              </span>
+              {comment.text}
             </Typography>
           </div>
         ))}
       </div>
-      <div className="add-comment-container">
-        <input
-          type="text"
-          className="border rounded p-2 w-full"
-          placeholder="Ajouter un commentaire"
+      <Form onSubmit={handleAddComment} className="relative">
+        <InputRounded
+          as="input"
+          label="Mon Textarea"
           value={newComment}
+          name="monTextarea"
+          placeholder="Ajouter un commentaire…"
           onChange={(e) => setNewComment(e.target.value)}
-        />
-        <button
-          className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 focus:outline-none"
+          required={true}
+          className="w-full"
+          error={null}
+          color="brown"
+        ></InputRounded>
+        <IconButton
+          name="send"
+          size="small"
+          fill="brown"
           onClick={handleAddComment}
-        >
-          Ajouter un commentaire
-        </button>
-      </div>
+          className="absolute right-[20px] top-[13px]"
+        />
+      </Form>
     </Modal>
   );
 };
