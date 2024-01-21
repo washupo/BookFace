@@ -11,7 +11,7 @@ interface IconButtonProps {
 export const IconButton = ({ onClick, name, size, fill, className }: IconButtonProps) => {
   return (
     <button onClick={onClick} className={className}>
-      <Icon name={name} size={size} fill={fill} />
+      <Icon name={name} size={size} fill={fill}  />
     </button>
   );
 };

@@ -229,6 +229,13 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
           }}
         />
       )}
+      {/* Afficher le premier commentaire s'il existe */}
+      {/* {post.comments.length > 0 && (
+        <div className="border p-4 my-4">
+          <p className="text-lg font-semibold">{post.comments[0].username}</p>
+          <p className="text-gray-600">{post.comments[0].text}</p>
+        </div>
+      )} */}
     </article>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Modal } from "../../common/Modal";
-import { Button } from "../../common/button";
+import { Button } from "../../common/Button";
 import { IconButton } from "../../common/IconButton";
 import maskImage from "../../assets/images/masque.svg";
 import axios from "axios";
@@ -11,7 +11,11 @@ interface PostModalProps {
   handleCloseModal: () => void;
 }
 
-export const PostModal = ({ setIsOpen, className, handleCloseModal }: PostModalProps) => {
+export const PostModal = ({
+  setIsOpen,
+  className,
+  handleCloseModal,
+}: PostModalProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [caption, setCaption] = useState<string>("");
   const [croppedImage, setCroppedImage] = useState<string>(maskImage);

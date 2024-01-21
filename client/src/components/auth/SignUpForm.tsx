@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import { Input } from "../form/Input";
 import { Form } from "../form/Form";
-import { Button } from "../../common/button";
+import { Button } from "../../common/Button";
 import axios from "axios";
-
 
 export const SignUpForm = () => {
   const [credentials, setCredentials] = useState({
@@ -15,14 +14,16 @@ export const SignUpForm = () => {
     species: "",
     adress: "",
     gender: "",
-  })
+  });
 
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setCredentials({
       ...credentials,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -30,19 +31,23 @@ export const SignUpForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/auth/signup",
+      const response = await axios.post(
+        "http://localhost:8000/auth/signup",
         credentials
       );
 
       console.log("Réponse du serveur :", response.data);
       navigate("/homepage");
       const { token } = response.data;
-      localStorage.setItem("token", token); 
+      localStorage.setItem("token", token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Échec de l\'authentification :', error.response?.data?.message);
+        console.error(
+          "Échec de l'authentification :",
+          error.response?.data?.message
+        );
       } else {
-        console.error('An unexpected error occurred:', error);
+        console.error("An unexpected error occurred:", error);
       }
     }
   };
@@ -143,7 +148,7 @@ export const SignUpForm = () => {
           color="white"
           border="all"
           gap={true}
-          onChange={() => { }}
+          onChange={() => {}}
         />
       </div>
       <Button type="submit" background="white" name="Connexion" />
