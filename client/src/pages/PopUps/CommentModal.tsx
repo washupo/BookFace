@@ -1,6 +1,6 @@
 // CommentModal.tsx
 import { IconButton } from "../../common/IconButton";
-import { Modal } from "../../common/Modal";
+import { Modal } from "../../common/modal";
 import { Typography } from "../../common/Typography";
 import { Form } from "../../components/form/Form";
 import { useState } from "react";

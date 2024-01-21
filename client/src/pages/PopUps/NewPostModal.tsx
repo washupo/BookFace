@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Modal } from "../../common/Modal";
-import { Button } from "../../common/Button";
+import { Modal } from "../../common/modal";
+import { Button } from "../../common/button";
 import { IconButton } from "../../common/IconButton";
 import maskImage from "../../assets/images/masque.svg";
 import { Input } from "../../components/form/Input";

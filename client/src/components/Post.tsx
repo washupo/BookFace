@@ -221,11 +221,16 @@ export const Post = ({ post, onUpdate, className }: PostProps) => {
           className="comment-modal"
           handleCloseModal={closeCommentPopUp}
           comments={post.comments}
-          onAddComment={(comment) => {
+          onAddComment={(newCommentText) => {
             // Cette fonction sera appelée depuis le modal pour ajouter un commentaire.
+            const newComment = {
+              text: newCommentText,
+              username: "leNomUtilisateur",  // Remplacez par le nom d'utilisateur approprié
+            };
+
             const updatedPost = {
               ...post,
-              comments: [...post.comments, comment],
+              comments: [...post.comments, newComment],
             };
             onUpdate(updatedPost);
           }}

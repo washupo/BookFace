@@ -1,4 +1,4 @@
-import { Modal } from "../../common/Modal";
+import { Modal } from "../../common/modal";
 import { UserAccountForm } from "../UserProfile/UserAccountForm";
 
 import profilPicture from "../../assets/images/profilPictureTest.png";
