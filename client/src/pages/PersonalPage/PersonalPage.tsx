@@ -52,7 +52,7 @@ export default function PersonalPage() {
       try {
         // Envoyer requête GET
         const response = await api.get(
-          "http://localhost:8000/profile",
+          `${import.meta.env.VITE_API_URL}/profile`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

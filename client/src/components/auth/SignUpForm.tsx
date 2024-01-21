@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Input } from "../form/Input";
 import { Form } from "../form/Form";
-import { Button } from "../../common/Button";
+import { Button } from "../../common/button";
 import axios from "axios";
 
 export const SignUpForm = () => {
@@ -32,7 +32,7 @@ export const SignUpForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/signup",
+        `${import.meta.env.VITE_API_URL}/auth/signup`,
         credentials
       );
 

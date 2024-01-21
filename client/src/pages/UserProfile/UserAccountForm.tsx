@@ -50,7 +50,7 @@ export const UserAccountForm = (): JSX.Element => {
       try {
         // Envoyer requête GET
         const response = await api.get(
-          "http://localhost:8000/profile",
+          `${import.meta.env.VITE_API_URL}/profile`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -97,7 +97,7 @@ export const UserAccountForm = (): JSX.Element => {
       const userId = decodedToken._id;
       console.log("userId :", userId);
 
-      const response = await axios.put(`http://localhost:8000/profile/${userId}`,
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/profile/${userId}`,
         formData,
         {
           headers: {

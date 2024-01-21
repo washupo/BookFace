@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { Input } from "../form/Input";
 import { Form } from "../form/Form";
-import { Button } from "../../common/Button";
+import { Button } from "../../common/button";
 
 export const LoginForm = (): JSX.Element => {
   const [credentials, setCredentials] = useState({
@@ -28,7 +28,7 @@ export const LoginForm = (): JSX.Element => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/login",
+        `${import.meta.env.VITE_API_URL}/auth/login`,
         credentials
       );
 
