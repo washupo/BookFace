@@ -6,33 +6,27 @@ import { Layout } from "../../components/layout/Layout";
 import { NavBar } from "../../components/layout/NavBar";
 
 import { UserModal } from "../PopUps/UserAccountModal";
-import { disableBodyScroll, enableBodyScroll } from "../../BodyScroll";
+import { disableBodyScroll, enableBodyScroll } from "../../bodyscroll";
 
-import profilPicture from '../../assets/images/profilPictureTest.png';
 import axios from "axios";
 import { api } from "../../API/api";
 
-interface ProfileDataPops {
+interface ProfilDataProps {
   _id: string;
-  userId: string;
-  fullName: string;
   username: string;
-  bio?: string;
-  avatar?: object;
-  email?: string;
-  birthdate?: string;
-  hash_password?: string;
-  species?: string;
-  gender?: 'M' | 'F' | 'X';
+  email: string;
+  birthdate: string;
+  species: string;
+  bio: string;
+  avatar: {
+    url: string;
+  }
 }
 
-export default function PersonalPage(
-  {
-    userId, username, fullName, bio, avatar, email, birthdate, hash_password, species, gender
-  }: ProfileDataPops
-) {
+
+export default function PersonalPage() {
   const [popUpUser, setPopUpUser] = useState(false);
-  const [profileDatas, setProfileDatas] = useState<ProfileDataPops[]>([]);
+  const [profileDatas, setProfileDatas] = useState<ProfilDataProps[]>([]);
 
 
   const openPopUpUser = () => {
