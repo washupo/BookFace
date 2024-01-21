@@ -98,23 +98,36 @@ export const updateProfile = async (req: RequestWithUser, res: Response) => {
 
     // Find the user by ID
     const user = await User.findById(userId);
+    const profile = await Profile.findOne({ userId });
 
-    if (!user) {
+    if (!user || !profile) {
       return res.status(404).json({ message: "User not found" });
     }
 
     // Update user information
     await user.updateOne({
       fullName: req.body.fullName,
+      email: req.body.email,
+      password: req.body.password,
       species: req.body.species,
-      address: req.body.address,
       gender: req.body.gender,
+      birthdate: req.body.birthdate,
+      username: req.body.username,
+      // Add other fields as needed
+    });
+
+    // Update profile information
+    await profile.updateOne({
+      bio: req.body.bio,
+      avatar: req.body.avatar,
       // Add other fields as needed
     });
 
     // Return the updated user
     const updatedUser = await User.findById(userId);
-    return res.json(updatedUser);
+    const Updateprofile = await Profile.findOne({ userId });
+
+    return res.json({ user: updatedUser, profile: Updateprofile});
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
@@ -134,13 +147,12 @@ export const getProfile = async (req: RequestWithUser, res: Response) => {
     }
 
     const combinedInfo = {
-      _id: existingProfile._id,
+      _id: existingUser._id,
       userId: existingProfile.userId,
+      username: existingUser.fullName,
+      email: existingUser.email,     
       bio: existingProfile.bio,
       avatar: existingProfile.avatar,
-      email: existingProfile.email,
-      username: existingUser.fullName,
-      fullName: existingUser.fullName,
       species: existingUser.species,
       gender: existingUser.gender,
       birthdate: existingUser.birthdate,

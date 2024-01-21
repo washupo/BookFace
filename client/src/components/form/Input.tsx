@@ -8,7 +8,7 @@ interface InputProps {
   value?: string | null;
   type?: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;  
   required?: boolean;
   className?: string;
