@@ -6,5 +6,5 @@ export interface PostData {
   profilePicture: string;
   postPicture: string;
   createdAt: string;
-  comments: { text: string; username: string }[];
+  comments: { text: string; username: string }[]; // Un tableau d'objets avec les propriétés text et username
 }
