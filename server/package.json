@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "install-server": "npm install",
-    "start-server": "node server.js",
+    "start-server": "tsc && node server.js",
     "dev": "nodemon server.ts"
   },
   "author": "",
