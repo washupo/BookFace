@@ -10,7 +10,7 @@ export default function (app: Application) {
 
   app.route("/auth/login").post(userHandlers.login);
 
-  app.route("/profile").get(userHandlers.loginRequired, userHandlers.profile);
+  app.route("/profile").get(userHandlers.loginRequired, userHandlers.getProfile);
 
   app
     .route("/profile")
